@@ -11,13 +11,14 @@ const FilterDocumentsModal = ({
   handleTypeChange,
   handleValueChange,
   type,
+  value,
 }: IFilterDocumentsModalProps) => {
   const renderFilterDocumentsModalForm = () => {
     switch (type) {
       case 'type':
         return <TypeDocumentsFilter />
       default:
-        return <NameDocumentsFilter />
+        return <NameDocumentsFilter value={value as string} handleValueChange={handleValueChange} />
     }
   }
 
@@ -35,7 +36,7 @@ const FilterDocumentsModal = ({
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={type?? ""}
+              value={type ?? ""}
               label="Filter by"
               defaultValue={"name"}
               onChange={handleTypeSelectChange}

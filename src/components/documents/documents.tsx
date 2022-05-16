@@ -93,7 +93,7 @@ const Documents = () => {
       setFilterDocumentsType(type);
     },
     handleValueChange: (value: string | string[]) => {
-
+      setFilterDocumentsValue(value);
     },
   } as IFilterDocumentsModalProps);
 
@@ -102,6 +102,14 @@ const Documents = () => {
       ...filterDocumentsModalConfig,
       isOpen: true,
       type
+    })
+  }
+
+  const setFilterDocumentsValue = (value: string | string[]) => {
+    setFilterDocumentsModalConfig({
+      ...filterDocumentsModalConfig,
+      isOpen: true,
+      value
     })
   }
 
@@ -190,8 +198,6 @@ const Documents = () => {
     }
     else return { hasPagination: false };
   }
-
-  console.log('isopen docs', filterDocumentsModalConfig.isOpen);
 
   return (
     <Content title="Documents">
