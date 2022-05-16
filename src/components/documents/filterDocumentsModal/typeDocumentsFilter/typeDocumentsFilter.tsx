@@ -32,7 +32,12 @@ const TypeDocumentsFilter = ({
 }: ITypeDocumentsFilterProps) => {
   const isChecked = (type: string) => value && value.includes(type);
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
-    handleValueChange(type, !e.target.checked);
+    if (value.includes(type)) {
+      handleValueChange(value.filter((t) => t !== type));
+    }else{
+      handleValueChange([...value, type]);
+    }
+    
   }
   return (
     <FormGroup>

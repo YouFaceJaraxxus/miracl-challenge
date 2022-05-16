@@ -95,15 +95,8 @@ const Documents = () => {
     handleNameValueChange: (value: string) => {
       setFilterDocumentsValue('name', value);
     },
-    handleTypeValueChange: (value: string, checked: boolean) => {
-      const val = (filterDocumentsModalConfig.value ?? []) as string[];
-      console.log('checked', checked);
-      if (checked) {
-        setFilterDocumentsValue('type', val.filter((type) => type !== value));
-      }
-      else{
-        setFilterDocumentsValue('type', val.concat(value));
-      }
+    handleTypeValueChange: (value: string[]) => {
+      setFilterDocumentsValue('type', value);
     },
   } as IFilterDocumentsModalProps);
 
@@ -210,7 +203,6 @@ const Documents = () => {
     }
     else return { hasPagination: false };
   }
-  console.log(filterDocumentsModalConfig.value);
 
   return (
     <Content title="Documents">
