@@ -1,126 +1,116 @@
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import IUser from '../../models/user/IUser';
-import { createUserAsync, deleteUserAsync, getUsersAsync, patchUserAsync } from '../../redux/slices/usersSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
-import { selectUsers } from '../../redux/store/store';
-import { ICreateUser } from '../../service/interfaces/IUserService';
+import { selectDocuments } from '../../redux/store/store';
 import Content from '../common/content/content';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';
 import CustomTable from '../common/table/customTable';
 import { ITableRow } from '../common/table/customTableProps';
-import SaveUserForm from './saveDocumentForm/saveDocumentForm';
-import ICreateUserFormProps from './saveDocumentForm/saveDocumentFormProps';
-import { AddUserButton, UsersWrapper } from './documentsStyles';
+import { deleteDocumentAsync, getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
+import IDocument from '../../models/document/IDocument';
+import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
+import { DocumentsWrapper } from './documentsStyles';
+import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
+import { ICreateDocument } from '../../service/interfaces/IDocumentService';
 
-const userTableHeaders = [
+const documentsTableHeaders = [
   'Name',
-  'Last name',
+  'Type',
   '',
   ''
 ] as string[];
 
-const Users = () => {
-  const { users } = useAppSelector(selectUsers);
+const Documents = () => {
+  const { documents } = useAppSelector(selectDocuments);
   const theme = useTheme();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUsersAsync());
+    dispatch(getDocumentsAsync());
   }, [dispatch]);
 
-  const closeSaveUserModal = () => {
-    setSaveUserModalConfig({
-      ...saveUserModalConfig,
+  const closeSaveDocumentModal = () => {
+    setSaveDocumentModalConfig({
+      ...saveDocumentModalConfig,
       isOpen: false,
     })
   }
 
-  const deleteUser = (id: string) => {
-    dispatch(deleteUserAsync(id));
+  const deleteDocument = (id: string) => {
+    dispatch(deleteDocumentAsync(id));
   }
 
-  const closeDeleteUserModal = () => {
-    setDeleteUserModalConfig({
-      ...deleteUserModalConfig,
+  const closeDeleteDocumentModal = () => {
+    setDeleteDocumentModalConfig({
+      ...deleteDocumentModalConfig,
       isOpen: false,
     })
   }
 
-  const [saveUserModalConfig, setSaveUserModalConfig] = useState({ isOpen: false, handleClose: closeSaveUserModal } as ICreateUserFormProps);
-  const [deleteUserModalConfig, setDeleteUserModalConfig] = useState({
+  const [saveDocumentModalConfig, setSaveDocumentModalConfig] = useState(
+    {
+      isOpen: false, handleClose: closeSaveDocumentModal
+    } as ISaveDocumentFormProps
+  );
+
+  const [deleteDocumentModalConfig, setDeleteDocumentModalConfig] = useState({
     isOpen: false,
-    handleClose: closeDeleteUserModal,
+    handleClose: closeDeleteDocumentModal,
     severity: 'error',
-    title: 'Delete user?',
+    title: 'Delete document?',
   } as IConfirmModalProps);
 
-  const createUser = (user: ICreateUser) => {
-    dispatch(createUserAsync(user));
+  const patchDocument = (document: IDocument) => {
+    dispatch(patchDocumentAsync(document));
   }
 
-  const patchUser = (user: IUser) => {
-    dispatch(patchUserAsync(user));
-  }
-
-  const openCreateUserModal = () => {
-    setSaveUserModalConfig({
-      ...saveUserModalConfig,
-      isOpen: true,
-      type: 'create',
-      handleFormSubmit: (user: ICreateUser) => {
-        createUser(user);
-      },
-    })
-  };
-
-  const openPatchUserModal = (user: IUser) => {
-    setSaveUserModalConfig({
-      ...saveUserModalConfig,
+  const openPatchDocumentModal = (document: IDocument) => {
+    setSaveDocumentModalConfig({
+      ...saveDocumentModalConfig,
       isOpen: true,
       type: 'update',
-      handleFormSubmit: (user: IUser | ICreateUser) => {
-        patchUser(user as IUser);
+      handleFormSubmit: (document: IDocument | ICreateDocument) => {
+        patchDocument(document as IDocument);
       },
-      initialValues: user
+      initialValues: document
     })
   };
 
-  const openDeleteUserModal = (id: string) => {
-    setDeleteUserModalConfig({
-      ...deleteUserModalConfig,
+  const openDeleteDocumentModal = (id: string) => {
+    setDeleteDocumentModalConfig({
+      ...deleteDocumentModalConfig,
       isOpen: true,
       handleAccept: () => {
-        deleteUser(id);
-        closeDeleteUserModal();
+        deleteDocument(id);
+        closeDeleteDocumentModal();
       }
     })
   }
 
-  const getUserTableRows = (): ITableRow[] => {
-    return users ? users.map((user) => {
+  const getDocumentTableRows = (): ITableRow[] => {
+    return documents ? documents.map((document) => {
       return {
-        id: user.id,
+        id: document.id,
         rowItems: [
           {
             type: 'text',
-            text: user.name,
+            text: document.name,
           },
           {
             type: 'text',
-            text: user.lastName,
+            text: document.type,
           },
           {
             type: 'button',
             text: 'Update',
-            action : () => openPatchUserModal(user),
+            action: () => openPatchDocumentModal(document),
             color: theme.palette.common.white,
             bgColor: theme.palette.primary.main,
           },
           {
             type: 'button',
             text: 'Delete',
-            action: () => openDeleteUserModal(user.id),
+            action: () => openDeleteDocumentModal(document.id),
             color: theme.palette.common.white,
             bgColor: theme.palette.error.main,
           },
@@ -132,23 +122,22 @@ const Users = () => {
   }
 
   return (
-    <Content title="Users">
-      <UsersWrapper sx={{
-        width:{
+    <Content title="Documents">
+      <DocumentsWrapper sx={{
+        width: {
           xs: '100%'
         }
       }}>
-        <SaveUserForm {...saveUserModalConfig} />
-        <ConfirmModal {...deleteUserModalConfig} />
-        <AddUserButton onClick={openCreateUserModal}>Add user</AddUserButton>
+        <SaveDocumentForm {...saveDocumentModalConfig} />
+        <ConfirmModal {...deleteDocumentModalConfig} />
         <CustomTable
-          headers={userTableHeaders}
-          rows={getUserTableRows()}
+          headers={documentsTableHeaders}
+          rows={getDocumentTableRows()}
           hasIndexes
         />
-      </UsersWrapper>
+      </DocumentsWrapper>
     </Content>
   )
 };
 
-export default Users;
+export default Documents;

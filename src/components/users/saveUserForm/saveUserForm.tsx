@@ -4,7 +4,7 @@ import { ICreateUser } from '../../../service/interfaces/IUserService';
 import ConfirmModal from '../../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../../common/modal/confirmModal/confirmModalProps';
 import CustomModal from '../../common/modal/customModal';
-import ICreateUserFormProps from './saveUserFormProps';
+import ISaveUserFormProps from './saveUserFormProps';
 import { CustomForm, FormTextField, SubmitButton } from '../../common/customForm/customFormStyle';
 const SaveUserForm = ({
   isOpen,
@@ -12,7 +12,7 @@ const SaveUserForm = ({
   handleFormSubmit,
   type,
   initialValues,
-}: ICreateUserFormProps) => {
+}: ISaveUserFormProps) => {
   const { handleSubmit, control, getValues, setValue } = useForm<ICreateUser>({
     defaultValues: initialValues,
   });

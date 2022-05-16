@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ICreateUser } from '../../../service/interfaces/IUserService';
 import ConfirmModal from '../../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../../common/modal/confirmModal/confirmModalProps';
 import CustomModal from '../../common/modal/customModal';
-import ICreateUserFormProps from './saveDocumentFormProps';
 import { CustomForm, FormTextField, SubmitButton } from '../../common/customForm/customFormStyle';
-const SaveUserForm = ({
+import ISaveDocumentFormProps from './saveDocumentFormProps';
+import { ICreateDocument } from '../../../service/interfaces/IDocumentService';
+import { DocumentType } from '../../../models/document/IDocument';
+
+const SaveDocumentForm = ({
   isOpen,
   handleClose,
   handleFormSubmit,
   type,
   initialValues,
-}: ICreateUserFormProps) => {
-  const { handleSubmit, control, getValues, setValue } = useForm<ICreateUser>({
+}: ISaveDocumentFormProps) => {
+  const { handleSubmit, control, getValues, setValue } = useForm<ICreateDocument>({
     defaultValues: initialValues,
   });
 
   useEffect(() => {
     if (initialValues) {
       setValue('name', initialValues.name);
-      setValue('lastName', initialValues.lastName);
+      setValue('type', initialValues.type);
     }
   }, [initialValues, setValue]);
 
@@ -43,11 +45,11 @@ const SaveUserForm = ({
         handleFormSubmit({ ...getValues(), ...(type === 'update' && { id: initialValues?.id }) });
         handleClose();
         setValue('name', '');
-        setValue('lastName', '');
+        setValue('type', DocumentType.NONE);
       },
       handleClose: closeConfirmModal,
       severity: 'success',
-      title: type === 'create' ? 'Add user' : 'Update user',
+      title: type === 'create' ? 'Add document' : 'Update document',
       showOnTop: true,
     })
   }
@@ -91,9 +93,9 @@ const SaveUserForm = ({
           />
 
           <Controller
-            name="lastName"
+            name="type"
             control={control}
-            defaultValue=""
+            defaultValue={DocumentType.NONE}
             render={({
               field: { onChange, value },
               fieldState: { error },
@@ -105,25 +107,21 @@ const SaveUserForm = ({
                 helperText={error ? error.message : null}
                 onChange={onChange}
                 type="text"
-                label={'Last name'}
+                label={'Type'}
                 sx={{
                   marginBottom: '15px'
                 }}
               />
             )}
             rules={{
-              required: 'Last name required',
-              minLength: {
-                value: 2,
-                message: 'Last name must contain at least two characters',
-              },
+              required: 'Type required',
             }}
           />
 
           <SubmitButton
             type="submit"
           >
-            {type === 'create' ? 'Create' : 'Update'} user
+            {type === 'create' ? 'Create' : 'Update'} document
           </SubmitButton>
         </CustomForm>
         <ConfirmModal {...confirmModalConfig} />
@@ -132,4 +130,4 @@ const SaveUserForm = ({
   )
 };
 
-export default SaveUserForm;
+export default SaveDocumentForm;

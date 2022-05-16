@@ -11,7 +11,7 @@ import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';
 import CustomTable from '../common/table/customTable';
 import { ITableRow } from '../common/table/customTableProps';
 import SaveUserForm from './saveUserForm/saveUserForm';
-import ICreateUserFormProps from './saveUserForm/saveUserFormProps';
+import ISaveUserFormProps from './saveUserForm/saveUserFormProps';
 import { AddUserButton, UsersWrapper } from './usersStyles';
 
 const userTableHeaders = [
@@ -47,7 +47,7 @@ const Users = () => {
     })
   }
 
-  const [saveUserModalConfig, setSaveUserModalConfig] = useState({ isOpen: false, handleClose: closeSaveUserModal } as ICreateUserFormProps);
+  const [saveUserModalConfig, setSaveUserModalConfig] = useState({ isOpen: false, handleClose: closeSaveUserModal } as ISaveUserFormProps);
   const [deleteUserModalConfig, setDeleteUserModalConfig] = useState({
     isOpen: false,
     handleClose: closeDeleteUserModal,

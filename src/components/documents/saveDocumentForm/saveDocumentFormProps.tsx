@@ -1,10 +1,10 @@
-import IUser from "../../../models/user/IUser";
-import { ICreateUser } from "../../../service/interfaces/IUserService";
+import IDocument from '../../../models/document/IDocument';
+import { ICreateDocument } from '../../../service/interfaces/IDocumentService';
 
-export default interface ICreateUserFormProps{
+export default interface ISaveDocumentFormProps{
   isOpen: boolean;
   handleClose: () => void;
-  initialValues?: IUser;
+  initialValues?: IDocument;
   type: 'create' | 'update';
-  handleFormSubmit: (user: ICreateUser | IUser) => void;
+  handleFormSubmit: (user: ICreateDocument | IDocument) => void;
 };

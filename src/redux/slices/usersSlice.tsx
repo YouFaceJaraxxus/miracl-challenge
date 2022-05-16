@@ -47,14 +47,6 @@ export const createUserAsync = createAsyncThunk(
   },
 );
 
-export const updateUserAsync = createAsyncThunk(
-  'users/updateUser',
-  async (user: IUser): Promise<IUser> => {
-    const response = await userService.updateUser(user);
-    return response;
-  },
-);
-
 export const patchUserAsync = createAsyncThunk(
   'users/patchUser',
   async (user: IUser): Promise<IUser> => {

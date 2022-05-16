@@ -1,7 +1,7 @@
 import IUser from "../../../models/user/IUser";
 import { ICreateUser } from "../../../service/interfaces/IUserService";
 
-export default interface ICreateUserFormProps{
+export default interface ISaveUserFormProps{
   isOpen: boolean;
   handleClose: () => void;
   initialValues?: IUser;
