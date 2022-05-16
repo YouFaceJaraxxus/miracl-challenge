@@ -1,4 +1,4 @@
-import { ILocalStorageService } from './interfaces/IService';
+import { ILocalStorageService } from './interfaces/service';
 // @ts-ignore
 import uuid from 'react-uuid';
 

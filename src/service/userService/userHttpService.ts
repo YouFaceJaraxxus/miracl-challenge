@@ -2,8 +2,8 @@ import { API_BASE_URL } from '../../config/config';
 import IUser from '../../models/user/IUser';
 import { JSON_SUFFIX } from '../../util/constants';
 import HttpService from '../httpService';
-import { IAxiosService } from '../interfaces/IService';
-import IUserService, { ICreateUser, IDeleteResponse, IPatchUser } from '../interfaces/IUserService';
+import { IAxiosService } from '../interfaces/service';
+import IUserService, { ICreateUser, IDeleteResponse, IPatchUser } from '../interfaces/userService';
 
 const USERS_BASE_URL = 'users';
 

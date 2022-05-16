@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import IUser from '../../models/user/IUser';
-import { ICreateUser, IDeleteResponse } from '../../service/interfaces/IUserService';
+import { ICreateUser, IDeleteResponse } from '../../service/interfaces/userService';
 import { getArrayFromObject } from '../../util/util';
 
 //feel free to toggle between these two imports: that's the power I wanted to display using all that boiler plate code in the services

@@ -12,7 +12,7 @@ import IDocument from '../../models/document/IDocument';
 import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
 import { DocumentsWrapper } from './documentsStyles';
 import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
-import { ICreateDocument } from '../../service/interfaces/IDocumentService';
+import { ICreateDocument } from '../../service/interfaces/documentService';
 
 const documentsTableHeaders = [
   'Name',

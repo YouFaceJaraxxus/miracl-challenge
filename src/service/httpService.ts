@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/config';
-import { IAxiosService } from './interfaces/IService';
+import { IAxiosService } from './interfaces/service';
 import qs from 'qs';
 
 class HttpService implements IAxiosService {

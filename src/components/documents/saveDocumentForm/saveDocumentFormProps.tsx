@@ -1,5 +1,5 @@
 import IDocument from '../../../models/document/IDocument';
-import { ICreateDocument } from '../../../service/interfaces/IDocumentService';
+import { ICreateDocument } from '../../../service/interfaces/documentService';
 
 export default interface ISaveDocumentFormProps{
   isOpen: boolean;

@@ -4,7 +4,7 @@ import IUser from '../../models/user/IUser';
 import { createUserAsync, deleteUserAsync, getUsersAsync, patchUserAsync } from '../../redux/slices/usersSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { selectUsers } from '../../redux/store/store';
-import { ICreateUser } from '../../service/interfaces/IUserService';
+import { ICreateUser } from '../../service/interfaces/userService';
 import Content from '../common/content/content';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';

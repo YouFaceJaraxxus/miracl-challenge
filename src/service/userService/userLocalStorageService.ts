@@ -1,6 +1,6 @@
 import IUser from '../../models/user/IUser';
-import { ILocalStorageService } from '../interfaces/IService';
-import IUserService, { ICreateUser, IDeleteResponse, IPatchUser } from '../interfaces/IUserService';
+import { ILocalStorageService } from '../interfaces/service';
+import IUserService, { ICreateUser, IDeleteResponse, IPatchUser } from '../interfaces/userService';
 import LocalStorageService from '../localStorageService';
 
 const USERS_BASE_URL = 'users';

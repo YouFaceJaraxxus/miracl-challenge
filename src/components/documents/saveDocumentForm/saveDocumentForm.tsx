@@ -5,7 +5,7 @@ import IConfirmModalProps from '../../common/modal/confirmModal/confirmModalProp
 import CustomModal from '../../common/modal/customModal';
 import { CustomForm, FormTextField, SubmitButton } from '../../common/customForm/customFormStyle';
 import ISaveDocumentFormProps from './saveDocumentFormProps';
-import { ICreateDocument } from '../../../service/interfaces/IDocumentService';
+import { ICreateDocument } from '../../../service/interfaces/documentService';
 import { DocumentType } from '../../../models/document/IDocument';
 
 const SaveDocumentForm = ({

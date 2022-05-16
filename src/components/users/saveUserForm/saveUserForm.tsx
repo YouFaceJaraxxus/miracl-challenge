@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { ICreateUser } from '../../../service/interfaces/IUserService';
+import { ICreateUser } from '../../../service/interfaces/userService';
 import ConfirmModal from '../../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../../common/modal/confirmModal/confirmModalProps';
 import CustomModal from '../../common/modal/customModal';

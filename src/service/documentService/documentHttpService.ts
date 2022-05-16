@@ -2,8 +2,8 @@ import { API_BASE_URL } from '../../config/config';
 import IDocument from '../../models/document/IDocument';
 import { JSON_SUFFIX } from '../../util/constants';
 import HttpService from '../httpService';
-import IDocumentService, { ICreateDocument, IDeleteResponse, IPatchDocument } from '../interfaces/IDocumentService';
-import { IAxiosService } from '../interfaces/IService';
+import IDocumentService, { ICreateDocument, IDeleteResponse, IPatchDocument } from '../interfaces/documentService';
+import { IAxiosService } from '../interfaces/service';
 
 const DOCUMENTS_BASE_URL = 'documents';
 const queryParams = {

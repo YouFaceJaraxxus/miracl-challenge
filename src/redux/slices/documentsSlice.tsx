@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import IDocument from '../../models/document/IDocument';
 import { documentHttpService as documentService } from '../../service/documentService/documentHttpService';
-import { ICreateDocument, IDeleteResponse, IPatchDocument } from '../../service/interfaces/IDocumentService';
+import { ICreateDocument, IDeleteResponse, IPatchDocument } from '../../service/interfaces/documentService';
 import { getArrayFromObject } from '../../util/util';
 
 interface DocumentsState {
