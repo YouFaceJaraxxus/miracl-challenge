@@ -6,19 +6,20 @@ import IDocumentService, { ICreateDocument, IDeleteResponse, IPatchDocument } fr
 import { IAxiosService, IServiceConfig } from '../interfaces/service';
 
 const DOCUMENTS_BASE_URL = 'documents';
-const queryParams = {
-  query: {
-    orderBy: '"contactId"',
-    equalTo: '"-N2BRAudVHHZ0_UCST_J"',
-  }
-}
 
 class DocumentHttpService implements IDocumentService {
   constructor(baseUrl?: string) {
     this.service = new HttpService(`${baseUrl || API_BASE_URL}${DOCUMENTS_BASE_URL}`);
   }
   service: IAxiosService;
-  getAllDocuments = (config?: IServiceConfig): Promise<IDocument[]> => this.service.get(JSON_SUFFIX, queryParams).then(response => response.data);
+  getAllDocuments = async (config?: IServiceConfig): Promise<IDocument[]> => {
+    const documents: IDocument[] = await this.service.get(JSON_SUFFIX, config).then(response => response.data);
+    if (config) {
+      const { limit, offset } = config;
+      return documents.slice(offset, limit + offset);
+    }
+    return documents;
+  }
   getDocumentById = (id: string): Promise<IDocument> => this.service.get(`/${id}${JSON_SUFFIX}`).then(response => response.data);
   createDocument = (document: ICreateDocument): Promise<IDocument> => this.service.post(`${JSON_SUFFIX}`, document).then(response => response.data);
   updateDocument = (document: IDocument): Promise<IDocument> => this.service.put(`/${document.id}${JSON_SUFFIX}`, document).then(response => response.data);
