@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface IServiceQueryParameters{
   orderBy: string;
@@ -9,6 +9,7 @@ interface IServiceConfig{
   query?: IServiceQueryParameters;
   limit?: number;
   offset?: number;
+  axiosConfig?: AxiosRequestConfig;
 }
 
 interface IAxiosService {

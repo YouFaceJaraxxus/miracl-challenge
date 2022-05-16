@@ -14,7 +14,7 @@ class HttpService implements IAxiosService {
     if (query) {
       queryString = qs.stringify(query);
     }
-    return axios.get(`${this.baseUrl}${path}${queryString ? `?${queryString}` : ''}`);
+    return axios.get(`${this.baseUrl}${path}${queryString ? `?${queryString}` : ''}`, config?.axiosConfig);
   }
 
   post = (path: string, data: object, config?: object) => {
