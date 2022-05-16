@@ -12,14 +12,24 @@ interface ITableRow{
   rowItems: ITableRowItem[];
 }
 
+interface ICustomTablePagination{
+  hasPagination: boolean;
+  pageSize?: number;
+  currentPage?: number;
+  count?: number;
+  handlePagination?: (page: number) => void;
+}
+
 interface ICustomTableProps{
-  hasIndexes?: boolean;
   headers: string[];
   rows: ITableRow[];
+  hasIndexes?: boolean;
+  pagination?: ICustomTablePagination;
 }
 
 export type{
   ICustomTableProps,
   ITableRow,
   ITableRowItem,
+  ICustomTablePagination,
 }

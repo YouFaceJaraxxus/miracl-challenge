@@ -6,13 +6,14 @@ import Content from '../common/content/content';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';
 import CustomTable from '../common/table/customTable';
-import { ITableRow } from '../common/table/customTableProps';
+import { ICustomTablePagination, ITableRow } from '../common/table/customTableProps';
 import { deleteDocumentAsync, getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
 import IDocument from '../../models/document/IDocument';
 import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
 import { DocumentsWrapper } from './documentsStyles';
 import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
 import { ICreateDocument } from '../../service/interfaces/documentService';
+import { DOCUMENTS_PAGE_SIZE } from '../../util/constants';
 
 const documentsTableHeaders = [
   'Name',
@@ -23,12 +24,20 @@ const documentsTableHeaders = [
 
 const Documents = () => {
   const { documents, count } = useAppSelector(selectDocuments);
-  console.log('count', count);
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const getDocuments = (offset?: number) => {
+    dispatch(getDocumentsAsync({
+      limit: DOCUMENTS_PAGE_SIZE,
+      offset,
+    }))
+  }
+
   useEffect(() => {
-    dispatch(getDocumentsAsync());
-  }, [dispatch]);
+    getDocuments();
+  }, []);
 
   const closeSaveDocumentModal = () => {
     setSaveDocumentModalConfig({
@@ -122,6 +131,24 @@ const Documents = () => {
       []
   }
 
+  const handlePagination = (page: number) => {
+    getDocuments(page * DOCUMENTS_PAGE_SIZE);
+    setCurrentPage(page);
+  }
+
+  const getPagination = (): ICustomTablePagination => {
+    if (count > DOCUMENTS_PAGE_SIZE) {
+      return {
+        hasPagination: true,
+        handlePagination,
+        currentPage,
+        pageSize: DOCUMENTS_PAGE_SIZE,
+        count,
+      }
+    }
+    else return { hasPagination: false };
+  }
+
   return (
     <Content title="Documents">
       <DocumentsWrapper sx={{
@@ -135,6 +162,7 @@ const Documents = () => {
           headers={documentsTableHeaders}
           rows={getDocumentTableRows()}
           hasIndexes
+          pagination={getPagination()}
         />
       </DocumentsWrapper>
     </Content>
