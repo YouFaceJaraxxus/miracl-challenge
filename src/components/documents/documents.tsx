@@ -78,36 +78,26 @@ const Documents = () => {
     title: 'Delete document?',
   } as IConfirmModalProps);
 
-
+ 
 
   const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
     isOpen: false,
     value: null,
     handleClose: () => {
-      setFilterDocumentsModalConfig({
-        ...filterDocumentsModalConfig,
-        isOpen: false,
-      })
+
     },
     handleTypeChange: (type: 'name' | 'type') => {
       setFilterDocumentsType(type);
     },
     handleValueChange: (value: string | string[]) => {
-      setFilterDocumentsValue(value);
+
     },
   } as IFilterDocumentsModalProps);
-
-  const setFilterDocumentsValue = (value: string | string[]) => {
-    setFilterDocumentsModalConfig({
-      ...filterDocumentsModalConfig,
-      value,
-    })
-  }
 
   const setFilterDocumentsType = (type: 'name' | 'type') => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
-      value: type === 'name' ? '' : [],
+      isOpen: true,
       type
     })
   }
@@ -197,6 +187,8 @@ const Documents = () => {
     }
     else return { hasPagination: false };
   }
+
+  console.log('isopen docs', filterDocumentsModalConfig.isOpen);
 
   return (
     <Content title="Documents">
