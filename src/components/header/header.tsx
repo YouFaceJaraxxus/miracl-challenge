@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { setIsLogged } from '../../redux/slices/userSlice';
@@ -19,18 +18,25 @@ import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
+import { COUNTER_PATH, DOCUMENTS_PATH, USERS_PATH } from '../../router/route/routeConfig';
 
 const pages = [
   {
     id: 1,
     title: 'Counter',
-    route: '/counter',
+    route: COUNTER_PATH,
     protected: true,
   },
   {
     id: 2,
     title: 'Users',
-    route: '/users',
+    route: USERS_PATH,
+    protected: true,
+  },
+  {
+    id: 3,
+    title: 'Documents',
+    route: DOCUMENTS_PATH,
     protected: true,
   },
 ] as IHeaderTab[];

@@ -1,13 +1,20 @@
 import Counter from "../../components/counter/counter";
+import Documents from "../../components/documents/documents";
 import Home from "../../components/home/home";
 import Login from "../../components/login/login";
 import Users from "../../components/users/users";
 import ICustomRouteProps from "./customRouteProps.model";
 
-const DEFAULT_REDIRECT_PATH = '/login';
+const DEFAULT_PATH = '/';
+const LOGIN_PATH = '/login';
+const HOME_PATH = '/home';
+const COUNTER_PATH = '/counter';
+const USERS_PATH = '/users';
+const DOCUMENTS_PATH = '/documents';
+const DEFAULT_REDIRECT_PATH = LOGIN_PATH;
 const ROUTES: ICustomRouteProps[] = [
   {
-    id: 1,
+    id: 2,
     component: Login,
     exact: true,
     isProtected: false,
@@ -15,40 +22,54 @@ const ROUTES: ICustomRouteProps[] = [
     redirectPath: DEFAULT_REDIRECT_PATH,
   },
   {
-    id: 2,
+    id: 3,
     component: Home,
     exact: true,
     isProtected: false,
-    path: '/home',
-    redirectPath: DEFAULT_REDIRECT_PATH,
-  },
-  {
-    id: 3,
-    component: Counter,
-    exact: true,
-    isProtected: true,
-    path: '/counter',
+    path: HOME_PATH,
     redirectPath: DEFAULT_REDIRECT_PATH,
   },
   {
     id: 4,
-    component: Users,
-    exact: false,
+    component: Counter,
+    exact: true,
     isProtected: true,
-    path: '/users',
+    path: COUNTER_PATH,
     redirectPath: DEFAULT_REDIRECT_PATH,
   },
   {
     id: 5,
+    component: Users,
+    exact: false,
+    isProtected: true,
+    path: USERS_PATH,
+    redirectPath: DEFAULT_REDIRECT_PATH,
+  },
+  {
+    id: 5,
+    component: Documents,
+    exact: false,
+    isProtected: true,
+    path: DOCUMENTS_PATH,
+    redirectPath: DEFAULT_REDIRECT_PATH,
+  },
+  {
+    id: 1,
     component: Home,
     exact: false,
     isProtected: false,
-    path: '/',
+    path: DEFAULT_PATH,
     redirectPath: DEFAULT_REDIRECT_PATH,
   },
-] 
+]
 
 export {
   ROUTES,
   DEFAULT_REDIRECT_PATH,
+  DEFAULT_PATH,
+  LOGIN_PATH,
+  HOME_PATH,
+  COUNTER_PATH,
+  USERS_PATH,
+  DOCUMENTS_PATH,
 }
