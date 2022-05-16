@@ -21,7 +21,7 @@ class DocumentHttpService implements IDocumentService {
     };
     if (config) {
       const { limit, offset } = config;
-      if (limit && offset) {
+      if (limit != null && offset != null) {
         response.documents = documents.slice(offset, limit + offset);
       }
     }

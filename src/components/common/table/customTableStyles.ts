@@ -28,3 +28,11 @@ export const TableItemButton = styled('div')<ITableItem>(({theme, color, bgcolor
     opacity: '0.8',
   }
 }));
+
+export const PaginationWrapper = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  margin: 'auto',
+}));

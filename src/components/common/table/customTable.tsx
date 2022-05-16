@@ -7,14 +7,32 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ICustomTableProps, ITableRowItem } from './customTableProps';
-import { TableHeaderCell, TableItemButton, TableItemText } from './customTableStyles';
+import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper } from './customTableStyles';
+import { Pagination } from '@mui/material';
 
 
 const CustomTable = ({
   headers,
   rows,
-  hasIndexes = false
+  hasIndexes = false,
+  pagination = {
+    hasPagination: false,
+    count: 0,
+    currentPage: 0,
+    handlePagination: null,
+    pageSize: 0,
+  }
 }: ICustomTableProps) => {
+
+  const {
+    hasPagination,
+    count,
+    currentPage,
+    handlePagination,
+    pageSize
+  } = pagination;
+
+  console.log('pagination', pagination);
 
   const handleItemButtonClick = (action: Function | undefined) => {
     if (action) action();
@@ -35,6 +53,19 @@ const CustomTable = ({
         return <TableItemText>{rowItem.text}</TableItemText>
       }
     }
+  }
+
+  const getPaginationProps = () => {
+    if (pagination) {
+      return {
+        count: Math.ceil(count / pageSize),
+        page: currentPage,
+        onChange: (_event: React.ChangeEvent<unknown>, value: number) => {
+          handlePagination(value);
+        }
+      }
+    }
+    return {};
   }
 
   return (
@@ -71,6 +102,13 @@ const CustomTable = ({
           ))}
         </TableBody>
       </Table>
+      {
+        hasPagination &&
+        <PaginationWrapper>
+          <Pagination {...getPaginationProps()} />
+        </PaginationWrapper>
+
+      }
     </TableContainer>
   );
 }

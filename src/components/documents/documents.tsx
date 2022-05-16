@@ -26,7 +26,7 @@ const Documents = () => {
   const { documents, count } = useAppSelector(selectDocuments);
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getDocuments = (offset?: number) => {
     dispatch(getDocumentsAsync({
@@ -36,7 +36,7 @@ const Documents = () => {
   }
 
   useEffect(() => {
-    getDocuments();
+    getDocuments(1);
   }, []);
 
   const closeSaveDocumentModal = () => {
@@ -132,7 +132,7 @@ const Documents = () => {
   }
 
   const handlePagination = (page: number) => {
-    getDocuments(page * DOCUMENTS_PAGE_SIZE);
+    getDocuments((page - 1) * DOCUMENTS_PAGE_SIZE);
     setCurrentPage(page);
   }
 
