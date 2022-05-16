@@ -69,47 +69,48 @@ const CustomTable = ({
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
 
-          <TableRow>
-            {hasIndexes &&
-              <TableHeaderCell align="center">No.</TableHeaderCell>
-            }
-            {
-              headers.map((header, index) => (
-                <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
-              ))
-            }
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow>
               {hasIndexes &&
-                <TableCell align="center">{index + 1}</TableCell>
+                <TableHeaderCell align="center">No.</TableHeaderCell>
               }
               {
-                row.rowItems.map((rowItem, index) => (
-                  <TableCell align="center" key={index}>{renderRowItem(rowItem)}</TableCell>
+                headers.map((header, index) => (
+                  <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
                 ))
               }
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow
+                key={row.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                {hasIndexes &&
+                  <TableCell align="center">{index + 1}</TableCell>
+                }
+                {
+                  row.rowItems.map((rowItem, index) => (
+                    <TableCell align="center" key={index}>{renderRowItem(rowItem)}</TableCell>
+                  ))
+                }
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       {
         hasPagination &&
         <PaginationWrapper>
           <Pagination {...getPaginationProps()} />
         </PaginationWrapper>
-
       }
-    </TableContainer>
+    </>
   );
 }
 
