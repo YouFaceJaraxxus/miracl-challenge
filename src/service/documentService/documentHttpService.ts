@@ -3,7 +3,7 @@ import IDocument from '../../models/document/IDocument';
 import { JSON_SUFFIX } from '../../util/constants';
 import HttpService from '../httpService';
 import IDocumentService, { ICreateDocument, IDeleteResponse, IPatchDocument } from '../interfaces/documentService';
-import { IAxiosService } from '../interfaces/service';
+import { IAxiosService, IServiceConfig } from '../interfaces/service';
 
 const DOCUMENTS_BASE_URL = 'documents';
 const queryParams = {
@@ -18,7 +18,7 @@ class DocumentHttpService implements IDocumentService {
     this.service = new HttpService(`${baseUrl || API_BASE_URL}${DOCUMENTS_BASE_URL}`);
   }
   service: IAxiosService;
-  getAllDocuments = (): Promise<IDocument[]> => this.service.get(JSON_SUFFIX, queryParams).then(response => response.data);
+  getAllDocuments = (config?: IServiceConfig): Promise<IDocument[]> => this.service.get(JSON_SUFFIX, queryParams).then(response => response.data);
   getDocumentById = (id: string): Promise<IDocument> => this.service.get(`/${id}${JSON_SUFFIX}`).then(response => response.data);
   createDocument = (document: ICreateDocument): Promise<IDocument> => this.service.post(`${JSON_SUFFIX}`, document).then(response => response.data);
   updateDocument = (document: IDocument): Promise<IDocument> => this.service.put(`/${document.id}${JSON_SUFFIX}`, document).then(response => response.data);

@@ -1,5 +1,16 @@
 import { AxiosResponse } from 'axios';
 
+interface IServiceQueryParameters{
+  orderBy: string;
+  equalTo: string;
+}
+
+interface IServiceConfig{
+  query?: IServiceQueryParameters;
+  limit?: number;
+  offset?: number;
+}
+
 interface IService {
   baseUrl?: string;
   get: (path: string, config?: any) => any;
@@ -11,7 +22,7 @@ interface IService {
 
 interface IAxiosService extends IService {
   baseUrl?: string;
-  get: (path: string, config?: any) => Promise<AxiosResponse<any>>;
+  get: (path: string, config?: IServiceConfig) => Promise<AxiosResponse<any>>;
   post: (path: string, data: any, config?: any) => Promise<AxiosResponse<any>>;
   put: (path: string, data: any, config?: any) => Promise<AxiosResponse<any>>;
   patch: (path: string, data: any, config?: any) => Promise<AxiosResponse<any>>;
@@ -31,5 +42,7 @@ export default IService;
 
 export type {
   IAxiosService,
-  ILocalStorageService
+  ILocalStorageService,
+  IServiceConfig,
+  IServiceQueryParameters,
 }
