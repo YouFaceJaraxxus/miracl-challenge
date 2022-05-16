@@ -32,8 +32,6 @@ const CustomTable = ({
     pageSize
   } = pagination;
 
-  console.log('pagination', pagination);
-
   const handleItemButtonClick = (action: Function | undefined) => {
     if (action) action();
   }

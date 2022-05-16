@@ -14,6 +14,8 @@ import { DocumentsWrapper } from './documentsStyles';
 import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
 import { ICreateDocument } from '../../service/interfaces/documentService';
 import { DOCUMENTS_PAGE_SIZE } from '../../util/constants';
+import FilterDocumentsModal from './filterDocumentsModal/filterDocumentsModal';
+import IFilterDocumentsModalProps from './filterDocumentsModal/filterDocumentsModalProps';
 
 const documentsTableHeaders = [
   'Name',
@@ -57,6 +59,13 @@ const Documents = () => {
     })
   }
 
+  const closeFilterDocumentsModal = () => {
+    setFilterDocumentsModalConfig({
+      ...filterDocumentsModalConfig,
+      isOpen: false,
+    })
+  }
+
   const [saveDocumentModalConfig, setSaveDocumentModalConfig] = useState(
     {
       isOpen: false, handleClose: closeSaveDocumentModal
@@ -69,6 +78,19 @@ const Documents = () => {
     severity: 'error',
     title: 'Delete document?',
   } as IConfirmModalProps);
+
+  const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
+    isOpen: true,
+    filterValue: null,
+    handleClose: closeFilterDocumentsModal,
+    handleTypeChange: () => {
+
+    },
+    handleValueChange: (value: string | string[]) => {
+
+    },
+    initialValue: null,
+  } as IFilterDocumentsModalProps);
 
   const patchDocument = (document: IDocument) => {
     dispatch(patchDocumentAsync(document));
@@ -158,6 +180,7 @@ const Documents = () => {
       }}>
         <SaveDocumentForm {...saveDocumentModalConfig} />
         <ConfirmModal {...deleteDocumentModalConfig} />
+        <FilterDocumentsModal {...filterDocumentsModalConfig} />
         <CustomTable
           headers={documentsTableHeaders}
           rows={getDocumentTableRows()}
