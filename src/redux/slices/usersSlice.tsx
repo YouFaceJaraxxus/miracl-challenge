@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import IUser from '../../models/user/IUser';
 import { ICreateUser, IDeleteResponse } from '../../service/interfaces/userService';
-import { getArrayFromObject } from '../../util/util';
 
 //feel free to toggle between these two imports: that's the power I wanted to display using all that boiler plate code in the services
 //another example would be by using the NODE_ENV variable to differentiate between production/development and other environments
@@ -75,7 +74,7 @@ const usersSlice = createSlice({
         state.fetchingUsers = true;
       })
       .addCase(getUsersAsync.fulfilled, (state, action) => {
-        state.users = getArrayFromObject(action.payload);
+        state.users = action.payload;
         state.fetchingUsers = false;
       })
       .addCase(getUsersAsync.rejected, (state) => {

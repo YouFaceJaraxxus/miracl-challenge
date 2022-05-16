@@ -4,6 +4,7 @@ import { JSON_SUFFIX } from '../../util/constants';
 import HttpService from '../httpService';
 import IDocumentService, { ICreateDocument, IDeleteResponse, IPatchDocument } from '../interfaces/documentService';
 import { IAxiosService, IServiceConfig } from '../interfaces/service';
+import { getArrayFromObject } from '../../util/util';
 
 const DOCUMENTS_BASE_URL = 'documents';
 
@@ -13,10 +14,14 @@ class DocumentHttpService implements IDocumentService {
   }
   service: IAxiosService;
   getAllDocuments = async (config?: IServiceConfig): Promise<IDocument[]> => {
-    const documents: IDocument[] = await this.service.get(JSON_SUFFIX, config).then(response => response.data);
+    const documents: IDocument[] = getArrayFromObject(await this.service.get(JSON_SUFFIX, config).then(response => response.data));
     if (config) {
+      console.log('conf', config);
       const { limit, offset } = config;
-      return documents.slice(offset, limit + offset);
+      console.log('documents', documents);
+      if (limit && offset)
+        return documents.slice(offset, limit + offset);
+      else return documents;
     }
     return documents;
   }

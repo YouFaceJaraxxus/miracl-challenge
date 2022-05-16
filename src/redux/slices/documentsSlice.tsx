@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import IDocument from '../../models/document/IDocument';
 import { documentHttpService as documentService } from '../../service/documentService/documentHttpService';
 import { ICreateDocument, IDeleteResponse, IPatchDocument } from '../../service/interfaces/documentService';
-import { getArrayFromObject } from '../../util/util';
 
 interface DocumentsState {
   documents: IDocument[] | undefined;
@@ -21,7 +20,10 @@ const initialState: DocumentsState = {
 export const getDocumentsAsync = createAsyncThunk(
   'documents/getDocuments',
   async (): Promise<IDocument[]> => {
-    const response = await documentService.getAllDocuments();
+    const response = await documentService.getAllDocuments({
+      limit: 2,
+      offset: 1,
+    });
     return response;
   },
 );
@@ -70,7 +72,7 @@ const documentsSlice = createSlice({
         state.fetchingDocuments = true;
       })
       .addCase(getDocumentsAsync.fulfilled, (state, action) => {
-        state.documents = getArrayFromObject(action.payload);
+        state.documents = action.payload;
         state.fetchingDocuments = false;
       })
       .addCase(getDocumentsAsync.rejected, (state) => {

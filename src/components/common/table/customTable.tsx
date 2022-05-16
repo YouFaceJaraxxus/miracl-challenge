@@ -63,8 +63,8 @@ const CustomTable = ({
                 <TableCell align="center">{index + 1}</TableCell>
               }
               {
-                row.rowItems.map((rowItem) => (
-                  <TableCell align="center" key={rowItem.id}>{renderRowItem(rowItem)}</TableCell>
+                row.rowItems.map((rowItem, index) => (
+                  <TableCell align="center" key={index}>{renderRowItem(rowItem)}</TableCell>
                 ))
               }
             </TableRow>

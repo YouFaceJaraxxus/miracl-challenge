@@ -6,9 +6,9 @@ interface IServiceQueryParameters{
 }
 
 interface IServiceConfig{
-  query: IServiceQueryParameters;
-  limit: number;
-  offset: number;
+  query?: IServiceQueryParameters;
+  limit?: number;
+  offset?: number;
 }
 
 interface IService {
