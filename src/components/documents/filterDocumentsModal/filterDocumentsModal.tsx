@@ -9,16 +9,17 @@ const FilterDocumentsModal = ({
   isOpen,
   handleClose,
   handleTypeChange,
-  handleValueChange,
+  handleNameValueChange,
+  handleTypeValueChange,
   type,
   value,
 }: IFilterDocumentsModalProps) => {
   const renderFilterDocumentsModalForm = () => {
     switch (type) {
       case 'type':
-        return <TypeDocumentsFilter />
+        return <TypeDocumentsFilter value={value as string[]} handleValueChange={handleTypeValueChange} />
       default:
-        return <NameDocumentsFilter value={value as string} handleValueChange={handleValueChange} />
+        return <NameDocumentsFilter value={value as string} handleValueChange={handleNameValueChange} />
     }
   }
 

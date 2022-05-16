@@ -78,7 +78,7 @@ const Documents = () => {
     title: 'Delete document?',
   } as IConfirmModalProps);
 
- 
+
 
   const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
     isOpen: false,
@@ -92,8 +92,18 @@ const Documents = () => {
     handleTypeChange: (type: 'name' | 'type') => {
       setFilterDocumentsType(type);
     },
-    handleValueChange: (value: string | string[]) => {
-      setFilterDocumentsValue(value);
+    handleNameValueChange: (value: string) => {
+      setFilterDocumentsValue('name', value);
+    },
+    handleTypeValueChange: (value: string, checked: boolean) => {
+      const val = (filterDocumentsModalConfig.value ?? []) as string[];
+      console.log('checked', checked);
+      if (checked) {
+        setFilterDocumentsValue('type', val.filter((type) => type !== value));
+      }
+      else{
+        setFilterDocumentsValue('type', val.concat(value));
+      }
     },
   } as IFilterDocumentsModalProps);
 
@@ -101,14 +111,16 @@ const Documents = () => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
       isOpen: true,
-      type
+      type,
+      value: type === 'name' ? '' : [],
     })
   }
 
-  const setFilterDocumentsValue = (value: string | string[]) => {
+  const setFilterDocumentsValue = (type: 'name' | 'type', value: string | string[]) => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
       isOpen: true,
+      type,
       value
     })
   }
@@ -198,6 +210,7 @@ const Documents = () => {
     }
     else return { hasPagination: false };
   }
+  console.log(filterDocumentsModalConfig.value);
 
   return (
     <Content title="Documents">

@@ -4,5 +4,6 @@ export default interface IFilterDocumentsModalProps{
   type: 'name' | 'type';
   value: string | string[];
   handleTypeChange: (type: 'name' | 'type') => void;
-  handleValueChange: (value: string | string[]) => void; 
+  handleNameValueChange: (value: string) => void; 
+  handleTypeValueChange: (value: string, checked: boolean) => void; 
 };
