@@ -84,7 +84,10 @@ const Documents = () => {
     isOpen: false,
     value: null,
     handleClose: () => {
-
+      setFilterDocumentsModalConfig({
+        ...filterDocumentsModalConfig,
+        isOpen: false,
+      })
     },
     handleTypeChange: (type: 'name' | 'type') => {
       setFilterDocumentsType(type);
