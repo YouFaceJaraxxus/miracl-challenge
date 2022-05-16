@@ -1,0 +1,9 @@
+const {
+  REACT_APP_API_BASE_URL: API_BASE_URL,
+  REACT_APP_CUSTOM_ENV: CUSTOM_ENV,
+} = process.env;
+
+export {
+  API_BASE_URL,
+  CUSTOM_ENV,
+};
