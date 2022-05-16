@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/config';
 import { IAxiosService } from './interfaces/IService';
+import qs from 'qs';
 
 class HttpService implements IAxiosService {
   constructor(baseUrl?: string) {
@@ -8,7 +9,12 @@ class HttpService implements IAxiosService {
   }
   baseUrl?: string | undefined;
   get = (path: string, config?: object) => {
-    return axios.get(`${this.baseUrl}${path}`, config);
+    let queryString;
+    const query = (config as any)?.query;
+    if(query){
+      queryString = qs.stringify(query);
+    }
+    return axios.get(`${this.baseUrl}${path}${queryString? `?${queryString}` : ''}`, config);
   }
 
   post = (path: string, data: object, config?: object) => {
