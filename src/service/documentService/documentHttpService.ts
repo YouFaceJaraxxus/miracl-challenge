@@ -2,7 +2,7 @@ import { API_BASE_URL } from '../../config/config';
 import IDocument from '../../models/document/IDocument';
 import { JSON_SUFFIX } from '../../util/constants';
 import HttpService from '../httpService';
-import IDocumentService, { ICreateDocument, IDeleteResponse, IPatchDocument } from '../interfaces/documentService';
+import IDocumentService, { ICreateDocument, IDeleteResponse, IGetAllDocumentsResponse, IPatchDocument } from '../interfaces/documentService';
 import { IAxiosService, IServiceConfig } from '../interfaces/service';
 import { getArrayFromObject } from '../../util/util';
 
@@ -13,17 +13,19 @@ class DocumentHttpService implements IDocumentService {
     this.service = new HttpService(`${baseUrl || API_BASE_URL}${DOCUMENTS_BASE_URL}`);
   }
   service: IAxiosService;
-  getAllDocuments = async (config?: IServiceConfig): Promise<IDocument[]> => {
+  getAllDocuments = async (config?: IServiceConfig): Promise<IGetAllDocumentsResponse> => {
     const documents: IDocument[] = getArrayFromObject(await this.service.get(JSON_SUFFIX, config).then(response => response.data));
+    let response: IGetAllDocumentsResponse = {
+      count: documents.length,
+      documents,
+    };
     if (config) {
-      console.log('conf', config);
       const { limit, offset } = config;
-      console.log('documents', documents);
-      if (limit && offset)
-        return documents.slice(offset, limit + offset);
-      else return documents;
+      if (limit && offset) {
+        response.documents = documents.slice(offset, limit + offset);
+      }
     }
-    return documents;
+    return response;
   }
   getDocumentById = (id: string): Promise<IDocument> => this.service.get(`/${id}${JSON_SUFFIX}`).then(response => response.data);
   createDocument = (document: ICreateDocument): Promise<IDocument> => this.service.post(`${JSON_SUFFIX}`, document).then(response => response.data);

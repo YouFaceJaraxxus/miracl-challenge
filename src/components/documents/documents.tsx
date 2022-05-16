@@ -22,7 +22,8 @@ const documentsTableHeaders = [
 ] as string[];
 
 const Documents = () => {
-  const { documents } = useAppSelector(selectDocuments);
+  const { documents, count } = useAppSelector(selectDocuments);
+  console.log('count', count);
   const theme = useTheme();
   const dispatch = useAppDispatch();
   useEffect(() => {
