@@ -25,6 +25,8 @@ interface ICustomTableProps{
   rows: ITableRow[];
   hasIndexes?: boolean;
   pagination?: ICustomTablePagination;
+  hasFilter?: boolean;
+  handleOpenFilter?: () => void;
 }
 
 export type{

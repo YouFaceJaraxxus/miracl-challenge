@@ -21,7 +21,7 @@ const documentsTableHeaders = [
   'Name',
   'Type',
   '',
-  ''
+  '',
 ] as string[];
 
 const Documents = () => {
@@ -48,6 +48,7 @@ const Documents = () => {
     })
   }
 
+
   const deleteDocument = (id: string) => {
     dispatch(deleteDocumentAsync(id));
   }
@@ -55,13 +56,6 @@ const Documents = () => {
   const closeDeleteDocumentModal = () => {
     setDeleteDocumentModalConfig({
       ...deleteDocumentModalConfig,
-      isOpen: false,
-    })
-  }
-
-  const closeFilterDocumentsModal = () => {
-    setFilterDocumentsModalConfig({
-      ...filterDocumentsModalConfig,
       isOpen: false,
     })
   }
@@ -74,23 +68,49 @@ const Documents = () => {
 
   const [deleteDocumentModalConfig, setDeleteDocumentModalConfig] = useState({
     isOpen: false,
-    handleClose: closeDeleteDocumentModal,
+    handleClose: () => {
+      setFilterDocumentsModalConfig({
+        ...filterDocumentsModalConfig,
+        isOpen: false,
+      })
+    },
     severity: 'error',
     title: 'Delete document?',
   } as IConfirmModalProps);
 
-  const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
-    isOpen: true,
-    filterValue: null,
-    handleClose: closeFilterDocumentsModal,
-    handleTypeChange: () => {
 
+
+  const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
+    isOpen: false,
+    value: null,
+    handleClose: () => {
+      setFilterDocumentsModalConfig({
+        ...filterDocumentsModalConfig,
+        isOpen: false,
+      })
+    },
+    handleTypeChange: (type: 'name' | 'type') => {
+      setFilterDocumentsType(type);
     },
     handleValueChange: (value: string | string[]) => {
-
+      setFilterDocumentsValue(value);
     },
-    initialValue: null,
   } as IFilterDocumentsModalProps);
+
+  const setFilterDocumentsValue = (value: string | string[]) => {
+    setFilterDocumentsModalConfig({
+      ...filterDocumentsModalConfig,
+      value,
+    })
+  }
+
+  const setFilterDocumentsType = (type: 'name' | 'type') => {
+    setFilterDocumentsModalConfig({
+      ...filterDocumentsModalConfig,
+      value: type === 'name' ? '' : [],
+      type
+    })
+  }
 
   const patchDocument = (document: IDocument) => {
     dispatch(patchDocumentAsync(document));
@@ -116,6 +136,13 @@ const Documents = () => {
         deleteDocument(id);
         closeDeleteDocumentModal();
       }
+    })
+  }
+
+  const openFilterDocumentsModal = () => {
+    setFilterDocumentsModalConfig({
+      ...filterDocumentsModalConfig,
+      isOpen: true,
     })
   }
 
@@ -186,6 +213,8 @@ const Documents = () => {
           rows={getDocumentTableRows()}
           hasIndexes
           pagination={getPagination()}
+          hasFilter
+          handleOpenFilter={openFilterDocumentsModal}
         />
       </DocumentsWrapper>
     </Content>

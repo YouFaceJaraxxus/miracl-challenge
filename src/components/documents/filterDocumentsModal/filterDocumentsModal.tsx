@@ -1,6 +1,7 @@
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import CustomModal from '../../common/modal/customModal';
 import IFilterDocumentsModalProps from './filterDocumentsModalProps';
-import { FilterDocumentsModalWrapper } from './filterDocumentsModalStyles';
+import { FilterDocumentsModalSelect, FilterDocumentsModalWrapper } from './filterDocumentsModalStyles';
 import NameDocumentsFilter from './nameDocumentsFilter/nameDocumentsFilter';
 import TypeDocumentsFilter from './typeDocumentsFilter/typeDocumentsFilter';
 
@@ -10,19 +11,40 @@ const FilterDocumentsModal = ({
   handleTypeChange,
   handleValueChange,
   type,
-  initialValue,
 }: IFilterDocumentsModalProps) => {
-  const renderFilterDocumentsModalForm = () =>{
-    switch(type){
-      case 'type' : 
+  const renderFilterDocumentsModalForm = () => {
+    switch (type) {
+      case 'type':
         return <TypeDocumentsFilter />
-      default: 
+      default:
         return <NameDocumentsFilter />
     }
   }
+
+  const handleTypeSelectChange = (e: SelectChangeEvent) => {
+    const value = e.target.value as 'type' | 'name';
+    handleTypeChange(value);
+  }
+
   return (
     <CustomModal isOpen={isOpen} handleClose={handleClose}>
       <FilterDocumentsModalWrapper>
+        <FilterDocumentsModalSelect>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Filter by</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={type?? ""}
+              label="Filter by"
+              defaultValue={"name"}
+              onChange={handleTypeSelectChange}
+            >
+              <MenuItem value={'name'}>Name</MenuItem>
+              <MenuItem value={'type'}>Type</MenuItem>
+            </Select>
+          </FormControl>
+        </FilterDocumentsModalSelect>
         {renderFilterDocumentsModalForm()}
       </FilterDocumentsModalWrapper>
     </CustomModal>

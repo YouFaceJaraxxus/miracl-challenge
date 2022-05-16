@@ -7,6 +7,15 @@ export const FilterDocumentsModalWrapper = styled('div')(() => ({
   alignItems: 'flex-start',
 }));
 
+export const FilterDocumentsModalSelect = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  width: '100%',
+  margin: 'auto',
+}));
+
 export const FilterDocumentsModalTitle = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',

@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { ICustomTableProps, ITableRowItem } from './customTableProps';
 import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper } from './customTableStyles';
 import { Pagination } from '@mui/material';
+import { Icon, IconWrapperLink } from '../icon/icon';
 
 
 const CustomTable = ({
@@ -21,7 +22,9 @@ const CustomTable = ({
     currentPage: 0,
     handlePagination: null,
     pageSize: 0,
-  }
+  },
+  hasFilter = false,
+  handleOpenFilter = () => { },
 }: ICustomTableProps) => {
 
   const {
@@ -81,6 +84,15 @@ const CustomTable = ({
                   <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
                 ))
               }
+              {
+                hasFilter && (
+                  <TableHeaderCell align="center">
+                    <IconWrapperLink onClick={handleOpenFilter}>
+                      <Icon src="./filter_icon.svg" alt="filter icon" />
+                    </IconWrapperLink>
+                  </TableHeaderCell>
+                )
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,6 +108,11 @@ const CustomTable = ({
                   row.rowItems.map((rowItem, index) => (
                     <TableCell align="center" key={index}>{renderRowItem(rowItem)}</TableCell>
                   ))
+                }
+                {
+                  hasFilter && (
+                    <TableHeaderCell align="center"></TableHeaderCell>
+                  )
                 }
               </TableRow>
             ))}

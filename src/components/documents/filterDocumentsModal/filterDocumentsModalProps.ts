@@ -1,9 +1,8 @@
 export default interface IFilterDocumentsModalProps{
   isOpen: boolean;
   handleClose: () => void;
-  initialValue: string | string[];
   type: 'name' | 'type';
-  filterValue: string | string[];
-  handleTypeChange: () => void;
+  value: string | string[];
+  handleTypeChange: (type: 'name' | 'type') => void;
   handleValueChange: (value: string | string[]) => void; 
 };
