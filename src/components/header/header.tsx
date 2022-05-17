@@ -19,6 +19,7 @@ import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import { COUNTER_PATH, DOCUMENTS_PATH, USERS_PATH } from '../../router/route/routeConfig';
+import { AccountCircle } from '@mui/icons-material';
 
 const pages = [
   {
@@ -124,6 +125,7 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <Menu
+              
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -176,7 +178,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <AccountCircle />
               </IconButton>
             </Tooltip>
             <Menu
