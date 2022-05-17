@@ -1,10 +1,13 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAppSelector } from './redux/store/hooks';
+import { selectCommon } from './redux/store/store';
 
 const ThemeConfig = ({ children }: any) => {
+  const { theme: currentTheme } = useAppSelector(selectCommon);
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#948CFC',
+        main: currentTheme=== 'light' ? '#948CFC' : '#514e85',
         contrastText: '#fff',
         dark: '#221F40',
       },
@@ -60,17 +63,17 @@ const ThemeConfig = ({ children }: any) => {
               backgroundColor: '#948CFC',
             },
             '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus':
-              {
-                backgroundColor: '#959595',
-              },
+            {
+              backgroundColor: '#959595',
+            },
             '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active':
-              {
-                backgroundColor: '#959595',
-              },
+            {
+              backgroundColor: '#959595',
+            },
             '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
-              {
-                backgroundColor: '#959595',
-              },
+            {
+              backgroundColor: '#959595',
+            },
             '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
               backgroundColor: '#2b2b2b',
             },

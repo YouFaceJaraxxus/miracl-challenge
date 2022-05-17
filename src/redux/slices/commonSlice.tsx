@@ -14,7 +14,7 @@ interface IProgressCircleConfig{
 }
 
 interface ICommon {
-  theme: string;
+  theme: 'light' | 'dark';
   snackbarConfig: ISnackbarConfig;
   progressCircleConfig: IProgressCircleConfig;
 }
@@ -39,7 +39,7 @@ const commonSlice = createSlice({
   name: 'common',
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<string>) => {
+    setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
       state.theme = action.payload;
     },
     openSnackbar: (state, action: PayloadAction<ISnackbarConfig>) => {

@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,6 +19,7 @@ import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
 import { COUNTER_PATH, DOCUMENTS_PATH, USERS_PATH } from '../../router/route/routeConfig';
 import { AccountCircle } from '@mui/icons-material';
+import { setTheme } from '../../redux/slices/commonSlice';
 
 const pages = [
   {
@@ -99,6 +99,11 @@ const Header = () => {
     if (setting.action) setting.action();
   };
 
+  const toggleTheme = (theme: 'light' | 'dark') => {
+    dispatch(setTheme(theme));
+    setAnchorElUser(null);
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -125,7 +130,7 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <Menu
-              
+
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -197,6 +202,12 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <MenuItem>
+                <Typography textAlign="center" onClick={() => { toggleTheme('light') }}>Light theme</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center" onClick={() => { toggleTheme('dark'); }}>Dark theme</Typography>
+              </MenuItem>
               {settings.map((setting) => (
                 <MenuItem key={setting.id} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting.title}</Typography>
