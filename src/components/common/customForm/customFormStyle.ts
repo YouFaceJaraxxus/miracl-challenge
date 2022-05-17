@@ -15,7 +15,7 @@ export const SubmitButton = styled('button')(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   padding: '10px',
-  borderRadius: '15px',
+  borderRadius: '5px',
   textAlign: 'center',
   wordBreak: 'break-word',
   '&:hover': {

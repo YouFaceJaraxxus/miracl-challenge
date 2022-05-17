@@ -41,6 +41,7 @@ export const PaginationWrapper = styled('div')(() => ({
 export const NoContentCell = styled(TableCell)(() => ({
   textAlign: 'center',
   fontWeight: 'bolder',
-  fontSize: '3em',
-  padding: '100px 0'
+  fontSize: '2em',
+  padding: '100px 0',
+  wordBreak: 'break-word',
 }));

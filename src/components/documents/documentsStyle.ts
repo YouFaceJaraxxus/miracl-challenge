@@ -19,6 +19,8 @@ export const NoUserSelected = styled('div')(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   margin: '150px auto 0 auto',
-  fontSize: '3em',
+  fontSize: '2em',
   fontWeight: 'bolder',
+  textAlign: 'center',
+  wordBreak: 'break-word',
 }));

@@ -6,8 +6,7 @@ export const UsersWrapper = styled('div')(() => ({
 }));
 
 export const AddUserButton = styled('button')(({theme}) => ({
-  width: '50%',
-  fontSize: '1.2em',
+  width: '30%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -15,7 +14,7 @@ export const AddUserButton = styled('button')(({theme}) => ({
   borderRadius: '5px',
   textAlign: 'center',
   wordBreak: 'break-word',
-  margin: '20px auto',
+  margin: '30px auto',
   '&:hover':{
     opacity: 0.8,
     cursor: 'pointer',
