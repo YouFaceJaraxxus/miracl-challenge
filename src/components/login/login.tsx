@@ -24,7 +24,7 @@ const Login = () => {
   const onSubmit = () => {
     dispatch(setIsLogged(true));
     localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
-    history.push('/users');
+    history.push('/documents');
   }
 
   return (
