@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ICustomTableProps, ITableRowItem } from './customTableProps';
-import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper, NoContent } from './customTableStyle';
+import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper, NoContentCell } from './customTableStyle';
 import { Pagination } from '@mui/material';
 import { Icon, IconWrapperLink } from '../icon/icon';
 
@@ -78,34 +78,33 @@ const CustomTable = ({
 
   return (
     <>
-
-      {rows && rows.length > 0 ?
-        (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  {hasIndexes &&
-                    <TableHeaderCell align="center">No.</TableHeaderCell>
-                  }
-                  {
-                    headers.map((header, index) => (
-                      <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
-                    ))
-                  }
-                  {
-                    hasFilter && (
-                      <TableHeaderCell align="center">
-                        <IconWrapperLink onClick={handleOpenFilter}>
-                          <Icon src="./filter_icon.svg" alt="filter icon" />
-                        </IconWrapperLink>
-                      </TableHeaderCell>
-                    )
-                  }
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              {hasIndexes &&
+                <TableHeaderCell align="center">No.</TableHeaderCell>
+              }
+              {
+                headers.map((header, index) => (
+                  <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
+                ))
+              }
+              {
+                hasFilter && (
+                  <TableHeaderCell align="center">
+                    <IconWrapperLink onClick={handleOpenFilter}>
+                      <Icon src="./filter_icon.svg" alt="filter icon" />
+                    </IconWrapperLink>
+                  </TableHeaderCell>
+                )
+              }
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              rows && rows.length > 0 ?
+                rows.map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -124,17 +123,20 @@ const CustomTable = ({
                       )
                     }
                   </TableRow>
-                ))}
-              </TableBody></Table>
-          </TableContainer>
-        )
-        :
-        (
-          <NoContent>No {itemType} available</NoContent>
-        )
-      }
+                ))
 
+                :
+                (
+                  <TableRow>
+                    <NoContentCell colSpan={headers?.length + (hasIndexes ? 1 : 0) + (hasFilter ? 1 : 0)}>
+                      No {itemType} available
+                    </NoContentCell>
+                  </TableRow>
+                )
 
+            }
+          </TableBody></Table>
+      </TableContainer>
       {
         hasPagination &&
         <PaginationWrapper>

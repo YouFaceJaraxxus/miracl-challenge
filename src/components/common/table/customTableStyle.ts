@@ -1,4 +1,4 @@
-import { TableCell } from '@mui/material';
+import { TableCell, TableRow } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 interface ITableItem{
@@ -38,13 +38,9 @@ export const PaginationWrapper = styled('div')(() => ({
   marginTop: '10px',
 }));
 
-export const NoContent = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  margin: 'auto',
-  marginTop: '100px',
+export const NoContentCell = styled(TableCell)(() => ({
+  textAlign: 'center',
   fontWeight: 'bolder',
   fontSize: '3em',
+  padding: '100px 0'
 }));
