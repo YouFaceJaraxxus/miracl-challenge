@@ -4,10 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { selectDocuments, selectUsers } from '../../redux/store/store';
 import Content from '../common/content/content';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
-import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';
 import CustomTable from '../common/table/customTable';
 import { ICustomTablePagination, ITableRow } from '../common/table/customTableProps';
-import { deleteDocumentAsync, getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
+import { getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
 import IDocument from '../../models/document/IDocument';
 import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
 import { DocumentsWrapper, NoUserSelected, SelectUserWrapper } from './documentsStyle';
@@ -23,7 +22,6 @@ import { generateDownloadPromise, generateRandomDelay } from '../../util/util';
 const documentsTableHeaders = [
   'Name',
   'Type',
-  '',
   '',
   '',
 ] as string[];
@@ -65,45 +63,11 @@ const Documents = () => {
     })
   }
 
-
-  const deleteDocument = (id: string) => {
-    dispatch(deleteDocumentAsync(id)).then(() => {
-      //an edge case: what if we delete the last item in the list on the current page
-      if (documents.length === 1) {
-        handlePagination(1);
-      }
-      dispatch(openSnackbar({
-        showSnackbar: true,
-        snackbarText: 'Document deleted',
-        snackbarType: SUCCESS,
-      }))
-    });
-  }
-
-  const closeDeleteDocumentModal = () => {
-    setDeleteDocumentModalConfig({
-      ...deleteDocumentModalConfig,
-      isOpen: false,
-    })
-  }
-
   const [saveDocumentModalConfig, setSaveDocumentModalConfig] = useState(
     {
       isOpen: false, handleClose: closeSaveDocumentModal
     } as ISaveDocumentFormProps
   );
-
-  const [deleteDocumentModalConfig, setDeleteDocumentModalConfig] = useState({
-    isOpen: false,
-    handleClose: () => {
-      setDeleteDocumentModalConfig({
-        ...deleteDocumentModalConfig,
-        isOpen: false,
-      })
-    },
-    severity: 'error',
-    title: 'Delete document?',
-  } as IConfirmModalProps);
 
 
   const [filterDocumentsModalOpen, setFilterDocumentsModalOpen] = useState(false);
@@ -146,17 +110,6 @@ const Documents = () => {
     })
   };
 
-  const openDeleteDocumentModal = (id: string) => {
-    setDeleteDocumentModalConfig({
-      ...deleteDocumentModalConfig,
-      isOpen: true,
-      handleAccept: () => {
-        deleteDocument(id);
-        closeDeleteDocumentModal();
-      }
-    })
-  }
-
   const downloadDocument = (document: IDocument) => {
     const randomDelay = generateRandomDelay();
     dispatch(openProgress({
@@ -192,13 +145,6 @@ const Documents = () => {
             action: () => openPatchDocumentModal(document),
             color: theme.palette.common.white,
             bgColor: theme.palette.primary.main,
-          },
-          {
-            type: 'button',
-            text: 'Delete',
-            action: () => openDeleteDocumentModal(document.id),
-            color: theme.palette.common.white,
-            bgColor: theme.palette.error.main,
           },
           {
             type: 'button',
@@ -240,7 +186,6 @@ const Documents = () => {
         }
       }}>
         <SaveDocumentForm {...saveDocumentModalConfig} />
-        <ConfirmModal {...deleteDocumentModalConfig} />
         <FilterDocumentsModal
           isOpen={filterDocumentsModalOpen}
           handleClose={() => {
