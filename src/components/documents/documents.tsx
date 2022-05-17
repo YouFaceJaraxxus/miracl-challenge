@@ -190,6 +190,9 @@ const Documents = () => {
           }}
           handleTypeChange={(type: string) => {
             setFilterDocumentsModalType(type);
+            if(type === 'type'){
+              setFilterDocumentsModalValue('pdf');
+            }
           }}
           handleValueChange={(value: string) => {
             setFilterDocumentsModalValue(value);

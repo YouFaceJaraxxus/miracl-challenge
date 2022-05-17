@@ -11,17 +11,23 @@ const NameDocumentsFilter = ({
     setInputValue(e.target.value);
   }
 
-  const [inputValue, setInputValue] = useState('');
+  const [alreadyFetched, setAlreadyFetched] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
   const [inputChangeTimeout, setInputChangeTimeout] = useState(null);
 
+  //we need to skip the first fetch on "inputValue" change so we use the "alreadyFetched" as a flag.
   useEffect(() => {
-    if (inputChangeTimeout) {
-      clearTimeout(inputChangeTimeout);
+    if (!alreadyFetched) {
+      setAlreadyFetched(true);
     }
-    setInputChangeTimeout(setTimeout(() => {
-      console.log('inputValue', inputValue)
-      handleValueChange(inputValue);
-    }, TEXT_CHANGE_DELAY));
+    else {
+      if (inputChangeTimeout) {
+        clearTimeout(inputChangeTimeout);
+      }
+      setInputChangeTimeout(setTimeout(() => {
+        handleValueChange(inputValue);
+      }, TEXT_CHANGE_DELAY));
+    }
   }, [inputValue])
 
   //this makes sure that we clear the input value on clear button click
