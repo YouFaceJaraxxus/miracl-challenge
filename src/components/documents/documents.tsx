@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
-import { selectDocuments } from '../../redux/store/store';
+import { selectDocuments, selectUsers } from '../../redux/store/store';
 import Content from '../common/content/content';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';
@@ -10,11 +10,13 @@ import { ICustomTablePagination, ITableRow } from '../common/table/customTablePr
 import { deleteDocumentAsync, getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
 import IDocument from '../../models/document/IDocument';
 import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
-import { DocumentsWrapper } from './documentsStyles';
+import { DocumentsWrapper, NoUserSelected, SelectUserWrapper } from './documentsStyles';
 import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
 import { ICreateDocument } from '../../service/interfaces/documentService';
 import { DOCUMENTS_PAGE_SIZE } from '../../util/constants';
 import FilterDocumentsModal from './filterDocumentsModal/filterDocumentsModal';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { getUsersAsync } from '../../redux/slices/usersSlice';
 
 const documentsTableHeaders = [
   'Name',
@@ -25,9 +27,15 @@ const documentsTableHeaders = [
 
 const Documents = () => {
   const { documents, count } = useAppSelector(selectDocuments);
+  const { users } = useAppSelector(selectUsers);
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const handleUserSelectChange = (e: SelectChangeEvent) => {
+    setCurrentUser(users.find((u) => u.id === e.target.value));
+  }
 
   const getDocuments = (offset?: number, type = filterDocumentsModalType, value = filterDocumentsModalValue) => {
     dispatch(getDocumentsAsync({
@@ -37,7 +45,13 @@ const Documents = () => {
         ...(type && value && {
           [type]: value
         })
-      }
+      },
+      ...(currentUser && {
+        query: {
+          orderBy: '"contactId"',
+          equalTo: `"${currentUser.id}"`
+        }
+      })
     }))
   }
 
@@ -87,12 +101,19 @@ const Documents = () => {
   const [filterDocumentsModalOpen, setFilterDocumentsModalOpen] = useState(false);
   const [filterDocumentsModalValue, setFilterDocumentsModalValue] = useState('');
   const [filterDocumentsModalType, setFilterDocumentsModalType] = useState('name');
+  const [alreadyFetchedDocs, setAlreadyFetchedDocs] = useState(false);
 
 
   useEffect(() => {
-    getDocuments(0, filterDocumentsModalType, filterDocumentsModalValue);
-    setCurrentPage(1);
-  }, [filterDocumentsModalValue, filterDocumentsModalType])
+    if (!alreadyFetchedDocs) {
+      dispatch(getUsersAsync());
+      setAlreadyFetchedDocs(true);
+    } else {
+      getDocuments(0, filterDocumentsModalType, filterDocumentsModalValue);
+      setCurrentPage(1);
+    }
+
+  }, [filterDocumentsModalValue, filterDocumentsModalType, currentUser])
 
 
   const patchDocument = (document: IDocument) => {
@@ -190,7 +211,7 @@ const Documents = () => {
           }}
           handleTypeChange={(type: string) => {
             setFilterDocumentsModalType(type);
-            if(type === 'type'){
+            if (type === 'type') {
               setFilterDocumentsModalValue('pdf');
             } else setFilterDocumentsModalValue('');
           }}
@@ -203,16 +224,45 @@ const Documents = () => {
             setFilterDocumentsModalValue('');
           }}
         />
-        <CustomTable
-          headers={documentsTableHeaders}
-          rows={getDocumentTableRows()}
-          hasIndexes
-          pagination={getPagination()}
-          hasFilter
-          handleOpenFilter={() => {
-            setFilterDocumentsModalOpen(true);
-          }}
-        />
+        <SelectUserWrapper>
+          <FormControl>
+            <InputLabel id="user-select-label">User</InputLabel>
+            <Select
+              labelId="user-select-label"
+              id="user-select"
+              value={currentUser ? currentUser.id : ""}
+              label="User"
+              defaultValue={""}
+              onChange={handleUserSelectChange}
+              sx={{ minWidth: '100px' }}
+            >
+              {
+                users?.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>{user.name} {user.lastName}</MenuItem>
+                ))
+              }
+            </Select>
+          </FormControl>
+        </SelectUserWrapper>
+        {
+          currentUser ? (
+            <CustomTable
+              headers={documentsTableHeaders}
+              rows={getDocumentTableRows()}
+              hasIndexes
+              pagination={getPagination()}
+              hasFilter
+              handleOpenFilter={() => {
+                setFilterDocumentsModalOpen(true);
+              }}
+            />
+          )
+            :
+            (
+              <NoUserSelected>Select a user to fetch his documents.</NoUserSelected>
+            )
+        }
+
       </DocumentsWrapper>
     </Content>
   )
