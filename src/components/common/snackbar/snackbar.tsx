@@ -4,7 +4,7 @@ import { ERROR, SUCCESS } from '../../../util/constants';
 import { useAppSelector } from '../../../redux/store/hooks';
 import { selectCommon } from '../../../redux/store/store';
 import { closeSnackbar } from '../../../redux/slices/commonSlice';
-import { SnackbarWrapper } from './snackbarStyle';
+import { SnackbarCloseIcon, SnackbarText, SnackbarWrapper } from './snackbarStyle';
 
 const SNACKBAR_HIDE_TIMEOUT = 4000;
 const Snackbar = () => {
@@ -17,10 +17,12 @@ const Snackbar = () => {
     };
   }, [showSnackbar]);
 
+  console.log('showSnackbar', showSnackbar);
+
   return (
-    <SnackbarWrapper>
-      <div>{snackbarText}</div>
-      <div onClick={() => { dispatch(closeSnackbar()); }}>&#x2716;</div>
+    <SnackbarWrapper type={snackbarType}>
+      <SnackbarText>{snackbarText}</SnackbarText>
+      <SnackbarCloseIcon onClick={() => { dispatch(closeSnackbar()); }}>&#x2716;</SnackbarCloseIcon>
     </SnackbarWrapper>
   )
 }

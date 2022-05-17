@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ERROR } from '../../util/constants';
+import { SUCCESS } from '../../util/constants';
 
 interface ICommon {
   theme: string;
   showSnackbar: boolean;
   snackbarText: string;
-  snackbarType: string;
+  snackbarType: 'success' | 'error';
 }
 
 const initialState: ICommon = {
   theme: 'light',
-  showSnackbar: true,
-  snackbarText: 'HELLOOOsdjnfjidsbuifbdshufbdsyfdsbhfsd',
-  snackbarType: ERROR,
+  showSnackbar: false,
+  snackbarText: '',
+  snackbarType: SUCCESS,
 };
 
 const commonSlice = createSlice({
@@ -30,7 +30,7 @@ const commonSlice = createSlice({
     closeSnackbar: (state) => {
       state.showSnackbar = false;
       state.snackbarText = '';
-      state.snackbarType = '';
+      state.snackbarType = SUCCESS;
     },
   },
 })

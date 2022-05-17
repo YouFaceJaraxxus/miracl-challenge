@@ -4,8 +4,8 @@ const IS_LOGGED_LOCAL_STORAGE = 'isLogged';
 const CHECK_IS_LOGGED_LOCAL_STORAGE = 'checkIsLogged';
 const DEFAULT_PAGE_SIZE = 10;
 const DOCUMENTS_PAGE_SIZE = DEFAULT_PAGE_SIZE;
-const ERROR = 'ERROR';
-const SUCCESS = 'SUCCESS';
+const ERROR = 'error';
+const SUCCESS = 'success';
 
 export {
   JSON_SUFFIX,
