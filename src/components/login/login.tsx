@@ -9,6 +9,7 @@ import { CustomForm, FormTextField, SubmitButton } from '../common/customForm/cu
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import { LoginWrapper } from './loginStyle';
+import { DOCUMENTS_PATH } from '../../router/route/routeConfig';
 
 const Login = () => {
   const history = useHistory();
@@ -24,7 +25,7 @@ const Login = () => {
   const onSubmit = () => {
     dispatch(setIsLogged(true));
     localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(true));
-    history.push('/documents');
+    history.push(DOCUMENTS_PATH);
   }
 
   return (

@@ -17,7 +17,7 @@ import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
-import { DOCUMENTS_PATH, USERS_PATH } from '../../router/route/routeConfig';
+import { DOCUMENTS_PATH, LOGIN_PATH, USERS_PATH } from '../../router/route/routeConfig';
 import { AccountCircle } from '@mui/icons-material';
 import { setTheme } from '../../redux/slices/commonSlice';
 
@@ -52,7 +52,7 @@ const Header = () => {
       action: () => {
         dispatch(setIsLogged(false));
         localStorage.setItem(IS_LOGGED_LOCAL_STORAGE, JSON.stringify(false));
-        history.push('/login');
+        history.push(LOGIN_PATH);
       },
       protected: false,
     }
@@ -65,7 +65,7 @@ const Header = () => {
         id: 1,
         title: 'Login',
         action: () => {
-          history.push('/login');
+          history.push(LOGIN_PATH);
         },
         protected: false,
       }
