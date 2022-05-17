@@ -1,7 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useAppSelector } from "../../../../redux/store/hooks";
-import { selectDocumentTypes } from "../../../../redux/store/store";
-import ITypeDocumentsFilterProps from "./typeDocumentsFilterProps";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { useAppSelector } from '../../../../redux/store/hooks';
+import { selectDocumentTypes } from '../../../../redux/store/store';
+import ITypeDocumentsFilterProps from './typeDocumentsFilterProps';
 
 const TypeDocumentsFilter = ({
   value,

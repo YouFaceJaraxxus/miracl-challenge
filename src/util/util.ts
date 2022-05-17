@@ -1,4 +1,4 @@
-import { MAX_DOWNLOAD_TIME, MIN_DOWNLOAD_TIME } from "./constants";
+import { MAX_DOWNLOAD_TIME, MIN_DOWNLOAD_TIME } from './constants';
 
 /*
   a special method:

@@ -1,5 +1,5 @@
-import IDocument from "../../models/document/IDocument";
-import { IServiceConfig } from "./service";
+import IDocument from '../../models/document/IDocument';
+import { IServiceConfig } from './service';
 
 
 export default interface IDocumentService {

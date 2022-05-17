@@ -1,5 +1,5 @@
-import IUser from "../../../models/user/IUser";
-import { ICreateUser } from "../../../service/interfaces/userService";
+import IUser from '../../../models/user/IUser';
+import { ICreateUser } from '../../../service/interfaces/userService';
 
 export default interface ISaveUserFormProps{
   isOpen: boolean;

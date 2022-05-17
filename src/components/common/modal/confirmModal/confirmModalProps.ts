@@ -1,4 +1,4 @@
-import ICustomModalProps from "../customModalProps";
+import ICustomModalProps from '../customModalProps';
 
 export default interface IConfirmModalProps extends ICustomModalProps{
   title: string;

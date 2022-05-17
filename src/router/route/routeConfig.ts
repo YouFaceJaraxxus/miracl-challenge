@@ -1,8 +1,8 @@
-import Documents from "../../components/documents/documents";
-import Home from "../../components/home/home";
-import Login from "../../components/login/login";
-import Users from "../../components/users/users";
-import ICustomRouteProps from "./customRouteProps.model";
+import Documents from '../../components/documents/documents';
+import Home from '../../components/home/home';
+import Login from '../../components/login/login';
+import Users from '../../components/users/users';
+import ICustomRouteProps from './customRouteProps.model';
 
 const DEFAULT_PATH = '/';
 const LOGIN_PATH = '/login';
