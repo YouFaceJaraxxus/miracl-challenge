@@ -41,7 +41,7 @@ const Documents = () => {
     dispatch(getDocumentsAsync({
       limit: DOCUMENTS_PAGE_SIZE,
       offset,
-      where: {
+      filter: {
         ...(type && value && {
           [type]: value
         })

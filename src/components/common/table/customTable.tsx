@@ -69,6 +69,12 @@ const CustomTable = ({
     return {};
   }
 
+  const getRowNumber = (index: number) => {
+    return !hasPagination ? index + 1
+      :
+      (currentPage - 1) * pageSize + index + 1;
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -102,7 +108,7 @@ const CustomTable = ({
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 {hasIndexes &&
-                  <TableCell align="center">{index + 1}</TableCell>
+                  <TableCell align="center">{getRowNumber(index)}</TableCell>
                 }
                 {
                   row.rowItems.map((rowItem, index) => (

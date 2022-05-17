@@ -2,8 +2,8 @@ import { API_BASE_URL } from '../../config/config';
 import IDocument from '../../models/document/IDocument';
 import { JSON_SUFFIX } from '../../util/constants';
 import HttpService from '../httpService';
-import IDocumentService, { ICreateDocument, IDeleteResponse, IGetAllDocumentsResponse, IPatchDocument } from '../interfaces/documentService';
-import { IAxiosService, IServiceConfig } from '../interfaces/service';
+import IDocumentService, { ICreateDocument, IDeleteResponse, IDocumentServiceConfig, IGetAllDocumentsResponse, IPatchDocument } from '../interfaces/documentService';
+import { IAxiosService } from '../interfaces/service';
 import { getArrayFromObject } from '../../util/util';
 
 const DOCUMENTS_BASE_URL = 'documents';
@@ -13,18 +13,18 @@ class DocumentHttpService implements IDocumentService {
     this.service = new HttpService(`${baseUrl || API_BASE_URL}${DOCUMENTS_BASE_URL}`);
   }
   service: IAxiosService;
-  getAllDocuments = async (config?: IServiceConfig): Promise<IGetAllDocumentsResponse> => {
+  getAllDocuments = async (config?: IDocumentServiceConfig): Promise<IGetAllDocumentsResponse> => {
     const documents: IDocument[] = getArrayFromObject(await this.service.get(JSON_SUFFIX, config).then(response => response.data));
     let response: IGetAllDocumentsResponse = {
       count: documents.length,
       documents,
     };
     if (config) {
-      const { limit, offset, where } = config;
-      if (where != null) {
+      const { limit, offset, filter } = config;
+      if (filter != null) {
         response.documents = documents.filter((document) => {
           let match = true;
-          Object.entries(where).forEach(([key, value]) => {
+          Object.entries(filter).forEach(([key, value]) => {
             const docVal = document[key as keyof IDocument];
             if (docVal == null || !docVal.toLowerCase().includes((value as string).toLowerCase())) {
               match = false;

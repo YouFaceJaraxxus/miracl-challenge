@@ -3,13 +3,28 @@ import { IServiceConfig } from "./service";
 
 
 export default interface IDocumentService {
-  getAllDocuments: (config?: IServiceConfig) => Promise<IGetAllDocumentsResponse>;
+  getAllDocuments: (config?: IDocumentServiceConfig) => Promise<IGetAllDocumentsResponse>;
   getDocumentById: (id: string) => Promise<IDocument | null>;
   createDocument: (document: ICreateDocument) => Promise<IDocument>;
   updateDocument: (document: IDocument) => Promise<IDocument>;
   patchDocument: (document: IPatchDocument) => Promise<IDocument>;
   deleteDocument: (id: string) => Promise<IDeleteResponse>;
 };
+
+interface IDocumentServiceQueryParameters{
+  orderBy: string;
+  equalTo: string;
+}
+
+interface IDocumentServiceFilter{
+  name?: string;
+  type?: string;
+}
+
+interface IDocumentServiceConfig extends IServiceConfig{
+  filter?: IDocumentServiceFilter;
+  query? :IDocumentServiceQueryParameters;
+}
 
 interface IGetAllDocumentsResponse{
   count: number,
@@ -37,4 +52,7 @@ export type {
   IPatchDocument,
   IDeleteResponse,
   IGetAllDocumentsResponse,
+  IDocumentServiceConfig,
+  IDocumentServiceQueryParameters,
+  IDocumentServiceFilter,
 }

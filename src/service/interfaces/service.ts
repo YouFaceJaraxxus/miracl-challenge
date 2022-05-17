@@ -5,7 +5,7 @@ interface IServiceConfig{
   limit?: number;
   offset?: number;
   axiosConfig?: AxiosRequestConfig;
-  where?: any;
+  filter?: any;
 }
 
 interface IAxiosService {
