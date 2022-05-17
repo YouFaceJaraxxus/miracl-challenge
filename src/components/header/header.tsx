@@ -17,25 +17,19 @@ import { IHeaderSetting, IHeaderTab } from './headerConfig.model';
 import { selectUser } from '../../redux/store/store';
 import { AppBarLogo, AppBarLogoWrapper } from './headerStyle';
 import { IS_LOGGED_LOCAL_STORAGE } from '../../util/constants';
-import { COUNTER_PATH, DOCUMENTS_PATH, USERS_PATH } from '../../router/route/routeConfig';
+import { DOCUMENTS_PATH, USERS_PATH } from '../../router/route/routeConfig';
 import { AccountCircle } from '@mui/icons-material';
 import { setTheme } from '../../redux/slices/commonSlice';
 
 const pages = [
   {
     id: 1,
-    title: 'Counter',
-    route: COUNTER_PATH,
-    protected: true,
-  },
-  {
-    id: 2,
     title: 'Users',
     route: USERS_PATH,
     protected: true,
   },
   {
-    id: 3,
+    id: 2,
     title: 'Documents',
     route: DOCUMENTS_PATH,
     protected: true,

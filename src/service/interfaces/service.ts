@@ -10,10 +10,6 @@ interface IServiceConfig {
 interface IAxiosServiceConfig extends IServiceConfig {
   axiosConfig?: AxiosRequestConfig;
 }
-
-interface ILocalStorageServiceConfig extends IServiceConfig {
-}
-
 interface IAxiosService {
   baseUrl?: string;
   get: (path: string, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
@@ -24,18 +20,8 @@ interface IAxiosService {
 };
 
 
-interface ILocalStorageService {
-  get: (path: string, config?: ILocalStorageServiceConfig) => Promise<any>;
-  post: (path: string, data: any, config?: ILocalStorageServiceConfig) => Promise<any>;
-  put: (path: string, data: any, config?: ILocalStorageServiceConfig) => Promise<any>;
-  patch: (path: string, data: any, config?: ILocalStorageServiceConfig) => Promise<any>;
-  delete: (path: string, config?: ILocalStorageServiceConfig) => Promise<any>;
-};
-
 export type {
   IAxiosService,
-  ILocalStorageService,
   IServiceConfig,
   IAxiosServiceConfig,
-  ILocalStorageServiceConfig,
 }

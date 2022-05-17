@@ -1,4 +1,3 @@
-import Counter from "../../components/counter/counter";
 import Documents from "../../components/documents/documents";
 import Home from "../../components/home/home";
 import Login from "../../components/login/login";
@@ -8,7 +7,6 @@ import ICustomRouteProps from "./customRouteProps.model";
 const DEFAULT_PATH = '/';
 const LOGIN_PATH = '/login';
 const HOME_PATH = '/home';
-const COUNTER_PATH = '/counter';
 const USERS_PATH = '/users';
 const DOCUMENTS_PATH = '/documents';
 const DEFAULT_REDIRECT_PATH = LOGIN_PATH;
@@ -31,14 +29,6 @@ const ROUTES: ICustomRouteProps[] = [
   },
   {
     id: 4,
-    component: Counter,
-    exact: true,
-    isProtected: true,
-    path: COUNTER_PATH,
-    redirectPath: DEFAULT_REDIRECT_PATH,
-  },
-  {
-    id: 5,
     component: Users,
     exact: false,
     isProtected: true,
@@ -69,7 +59,6 @@ export {
   DEFAULT_PATH,
   LOGIN_PATH,
   HOME_PATH,
-  COUNTER_PATH,
   USERS_PATH,
   DOCUMENTS_PATH,
 }

@@ -1,12 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import IUser from '../../models/user/IUser';
 import { ICreateUser, IDeleteResponse } from '../../service/interfaces/userService';
-
-//feel free to toggle between these two imports: that's the power I wanted to display using all that boiler plate code in the services
-//another example would be by using the NODE_ENV variable to differentiate between production/development and other environments
-//to do this, we can import both the userHttpService and the userLocalStorageService and assign them (conditionally) to a const variable
 import { userHttpService as userService } from '../../service/userService/userHttpService';
-//import { userLocalStorageService as userService } from '../../service/userService/userLocalStorageService';
 
 interface UsersState {
   users: IUser[] | undefined;
