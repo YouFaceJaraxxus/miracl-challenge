@@ -1,4 +1,4 @@
 export default interface INameDocumentsFilterProps{
   value: string;
-  handleValueChange: (value: string) => void; 
+  handleValueChange: (type: 'name' | 'type', value: string) => void; 
 };

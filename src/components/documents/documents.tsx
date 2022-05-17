@@ -30,16 +30,17 @@ const Documents = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getDocuments = (offset?: number) => {
+  const getDocuments = (offset?: number, type = filterDocumentsModalConfig.type, value = filterDocumentsModalConfig.value) => {
     dispatch(getDocumentsAsync({
       limit: DOCUMENTS_PAGE_SIZE,
       offset,
+      where: {
+        ...(type && value && {
+          [type]: value
+        })
+      }
     }))
   }
-
-  useEffect(() => {
-    getDocuments(1);
-  }, []);
 
   const closeSaveDocumentModal = () => {
     setSaveDocumentModalConfig({
@@ -92,24 +93,29 @@ const Documents = () => {
     handleTypeChange: (type: 'name' | 'type') => {
       setFilterDocumentsType(type);
     },
-    handleNameValueChange: (value: string) => {
-      setFilterDocumentsValue('name', value);
-    },
-    handleTypeValueChange: (value: string[]) => {
-      setFilterDocumentsValue('type', value);
+    handleValueChange: (type: 'name' | 'type', value: string) => {
+      setFilterDocumentsValue(type, value);
     },
   } as IFilterDocumentsModalProps);
+
+  
+
+  useEffect(()=> {
+    console.log('changed type or value');
+    getDocuments(0, filterDocumentsModalConfig.type, filterDocumentsModalConfig.value);
+    setCurrentPage(1);
+  }, [filterDocumentsModalConfig.value, filterDocumentsModalConfig.type])
 
   const setFilterDocumentsType = (type: 'name' | 'type') => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
       isOpen: true,
       type,
-      value: type === 'name' ? '' : [],
+      value: '',
     })
   }
 
-  const setFilterDocumentsValue = (type: 'name' | 'type', value: string | string[]) => {
+  const setFilterDocumentsValue = (type: 'name' | 'type', value: string) => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
       isOpen: true,
@@ -203,6 +209,8 @@ const Documents = () => {
     }
     else return { hasPagination: false };
   }
+
+  console.log('final docs', documents);
 
   return (
     <Content title="Documents">

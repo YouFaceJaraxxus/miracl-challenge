@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DocumentType } from "../../../../models/document/IDocument";
 import ITypeDocumentsFilterProps from "./typeDocumentsFilterProps";
 
@@ -30,29 +30,31 @@ const TypeDocumentsFilter = ({
   value,
   handleValueChange,
 }: ITypeDocumentsFilterProps) => {
-  const isChecked = (type: string) => value && value.includes(type);
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
-    if (value.includes(type)) {
-      handleValueChange(value.filter((t) => t !== type));
-    }else{
-      handleValueChange([...value, type]);
-    }
-    
+  const handleTypeSelectValueChange = (e: SelectChangeEvent) => {
+    const value = e.target.value;
+    handleValueChange('type', value);
   }
   return (
-    <FormGroup>
-      {
-        documentTypes.map((docType, index) => (
-          <FormControlLabel
-            key={index}
-            control={
-              <Checkbox
-                value={docType.type}
-                checked={isChecked(docType.type)}
-                onChange={(e) => { handleCheckboxChange(e, docType.type) }} />} label={docType.label} />
-        ))
-      }
-    </FormGroup>
+    <FormControl fullWidth
+      sx={{
+        marginTop: '20px',
+      }}>
+      <InputLabel id="type-value-select-label">Type</InputLabel>
+      <Select
+        labelId="type-value-select-label"
+        id="type-value-select"
+        value={value ?? ""}
+        label="Filter by"
+        defaultValue={""}
+        onChange={handleTypeSelectValueChange}
+      >
+        {
+          documentTypes.map((dType, index) => (
+            <MenuItem key={index} value={dType.type}>{dType.label}</MenuItem>
+          ))
+        }
+      </Select>
+    </FormControl>
   )
 }
 

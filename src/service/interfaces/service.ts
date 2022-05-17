@@ -10,6 +10,7 @@ interface IServiceConfig{
   limit?: number;
   offset?: number;
   axiosConfig?: AxiosRequestConfig;
+  where?: any;
 }
 
 interface IAxiosService {

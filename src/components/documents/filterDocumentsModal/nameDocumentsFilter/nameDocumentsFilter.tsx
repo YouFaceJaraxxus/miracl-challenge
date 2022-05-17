@@ -6,7 +6,7 @@ const NameDocumentsFilter = ({
   handleValueChange
 }: INameDocumentsFilterProps) => {
   const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleValueChange(e.target.value);
+    handleValueChange('name', e.target.value);
   }
   return (
     <TextField

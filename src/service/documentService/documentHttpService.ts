@@ -20,9 +20,36 @@ class DocumentHttpService implements IDocumentService {
       documents,
     };
     if (config) {
-      const { limit, offset } = config;
+      const { limit, offset, where } = config;
+      console.log('where', where);
+      console.log('offset', offset);
+      console.log('limit', limit);
+      console.log('documents', documents);
+      if (where != null) {
+        console.log('not null');
+        response.documents = documents.filter((document) => {
+          console.log('filtar');
+          let match = true;
+          Object.entries(where).forEach(([key, value]) => {
+            const docVal = document[key as keyof IDocument];
+            console.log('value', value);
+            console.log('docVal', docVal);
+            if (Array.isArray(value) && value.length !== 0 && !value.includes(docVal)) {
+              console.log('array no match')
+              match = false;
+            }
+            else if (docVal == null || !docVal.toLowerCase().includes((value as string).toLowerCase())) {
+              console.log('string no match')
+              match = false;
+            }
+          })
+          console.log('match end', match);
+          return match;
+        })
+        console.log('docs', response.documents);
+      }
       if (limit != null && offset != null) {
-        response.documents = documents.slice(offset, limit + offset);
+        response.documents = response.documents.slice(offset, limit + offset);
       }
     }
     return response;

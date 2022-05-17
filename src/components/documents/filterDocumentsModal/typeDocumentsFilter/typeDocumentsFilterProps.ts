@@ -1,4 +1,4 @@
 export default interface ITypeDocumentsFilterProps{
-  value: string[];
-  handleValueChange: (value: string[]) => void; 
+  value: string;
+  handleValueChange: (type: 'name' | 'type', value: string) => void; 
 };
