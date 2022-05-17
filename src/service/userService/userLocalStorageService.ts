@@ -23,7 +23,7 @@ class UserLocalStorageService implements IUserService {
   createUser = (user: ICreateUser): Promise<IUser> => this.service.post(USERS_BASE_URL, user);
   updateUser = (user: IUser): Promise<IUser> => this.service.put(USERS_BASE_URL, user);
   patchUser = (user: IPatchUser): Promise<IUser> => this.service.patch(USERS_BASE_URL, user);
-  deleteUser = (id: string): Promise<IDeleteResponse> => this.service.delete(USERS_BASE_URL, { id });
+  deleteUser = (id: string): Promise<IDeleteResponse> => this.service.delete(USERS_BASE_URL, { filter: { id } });
 }
 
 const userLocalStorageService = new UserLocalStorageService();

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/config';
-import { IAxiosService, IServiceConfig } from './interfaces/service';
+import { IAxiosService, IAxiosServiceConfig } from './interfaces/service';
 import qs from 'qs';
 
 class HttpService implements IAxiosService {
@@ -8,7 +8,7 @@ class HttpService implements IAxiosService {
     this.baseUrl = baseUrl || API_BASE_URL;
   }
   baseUrl?: string | undefined;
-  get = (path: string, config?: IServiceConfig) => {
+  get = (path: string, config?: IAxiosServiceConfig) => {
     let queryString;
     const query = config?.query;
     if (query) {
@@ -17,19 +17,19 @@ class HttpService implements IAxiosService {
     return axios.get(`${this.baseUrl}${path}${queryString ? `?${queryString}` : ''}`, config?.axiosConfig);
   }
 
-  post = (path: string, data: object, config?: IServiceConfig) => {
+  post = (path: string, data: object, config?: IAxiosServiceConfig) => {
     return axios.post(`${this.baseUrl}${path}`, JSON.stringify(data), config?.axiosConfig);
   }
 
-  put = (path: string, data: any, config?: IServiceConfig) => {
+  put = (path: string, data: any, config?: IAxiosServiceConfig) => {
     return axios.put(`${this.baseUrl}${path}`, JSON.stringify(data), config?.axiosConfig);
   }
 
-  patch = (path: string, data: any, config?: IServiceConfig) => {
+  patch = (path: string, data: any, config?: IAxiosServiceConfig) => {
     return axios.patch(`${this.baseUrl}${path}`, JSON.stringify(data), config?.axiosConfig);
   }
 
-  delete = (path: string, config?: IServiceConfig) => {
+  delete = (path: string, config?: IAxiosServiceConfig) => {
     return axios.delete(`${this.baseUrl}${path}`, config?.axiosConfig);
   }
 }

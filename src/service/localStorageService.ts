@@ -1,4 +1,4 @@
-import { ILocalStorageService } from './interfaces/service';
+import { ILocalStorageService, ILocalStorageServiceConfig } from './interfaces/service';
 // @ts-ignore
 import uuid from 'react-uuid';
 
@@ -62,8 +62,8 @@ class LocalStorageService implements ILocalStorageService {
     return Promise.resolve(this.setLocalStorageItem(path, [{ ...data, id: uuid() }]));
   }
 
-  delete = (path: string, config: any) => {
-    const { id } = config;
+  delete = (path: string, config: ILocalStorageServiceConfig) => {
+    const id = config?.filter?.id;
     let initialValue = this.getItemFromLocalStorage(path);
     if (Array.isArray(initialValue)) {
       initialValue = initialValue.filter((item) => item.id !== id);
