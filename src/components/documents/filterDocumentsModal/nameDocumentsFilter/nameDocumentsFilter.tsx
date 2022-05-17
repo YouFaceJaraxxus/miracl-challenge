@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import INameDocumentsFilterProps from './nameDocumentsFilterProp';
+import INameDocumentsFilterProps from './nameDocumentsFilterProps';
 
 const TEXT_CHANGE_DELAY = 500;
 const NameDocumentsFilter = ({
