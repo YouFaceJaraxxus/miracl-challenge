@@ -85,8 +85,8 @@ const Documents = () => {
 
 
   const [filterDocumentsModalOpen, setFilterDocumentsModalOpen] = useState(false);
-  const [filterDocumentsModalValue, setFilterDocumentsModalValue] = useState(null);
-  const [filterDocumentsModalType, setFilterDocumentsModalType] = useState(null);
+  const [filterDocumentsModalValue, setFilterDocumentsModalValue] = useState('');
+  const [filterDocumentsModalType, setFilterDocumentsModalType] = useState('name');
 
 
   useEffect(() => {
