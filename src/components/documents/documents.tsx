@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { selectDocuments, selectUsers } from '../../redux/store/store';
 import Content from '../common/content/content';
-import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import CustomTable from '../common/table/customTable';
 import { ICustomTablePagination, ITableRow } from '../common/table/customTableProps';
 import { getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
