@@ -12,7 +12,7 @@ import CustomTable from '../common/table/customTable';
 import { ITableRow } from '../common/table/customTableProps';
 import SaveUserForm from './saveUserForm/saveUserForm';
 import ISaveUserFormProps from './saveUserForm/saveUserFormProps';
-import { AddUserButton, UsersWrapper } from './usersStyles';
+import { AddUserButton, UsersWrapper } from './usersStyle';
 
 const userTableHeaders = [
   'Name',

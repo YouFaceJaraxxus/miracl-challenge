@@ -10,7 +10,7 @@ import { ICustomTablePagination, ITableRow } from '../common/table/customTablePr
 import { deleteDocumentAsync, getDocumentsAsync, patchDocumentAsync } from '../../redux/slices/documentsSlice';
 import IDocument from '../../models/document/IDocument';
 import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
-import { DocumentsWrapper, NoUserSelected, SelectUserWrapper } from './documentsStyles';
+import { DocumentsWrapper, NoUserSelected, SelectUserWrapper } from './documentsStyle';
 import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
 import { ICreateDocument } from '../../service/interfaces/documentService';
 import { DOCUMENTS_PAGE_SIZE } from '../../util/constants';

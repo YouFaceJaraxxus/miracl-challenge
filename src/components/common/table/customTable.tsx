@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ICustomTableProps, ITableRowItem } from './customTableProps';
-import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper } from './customTableStyles';
+import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper } from './customTableStyle';
 import { Pagination } from '@mui/material';
 import { Icon, IconWrapperLink } from '../icon/icon';
 

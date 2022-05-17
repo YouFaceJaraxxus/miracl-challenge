@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import CustomModal from '../../common/modal/customModal';
 import IFilterDocumentsModalProps from './filterDocumentsModalProps';
-import { ClearButton, FilterDocumentsModalSelect, FilterDocumentsModalWrapper } from './filterDocumentsModalStyles';
+import { ClearButton, FilterDocumentsModalSelect, FilterDocumentsModalWrapper } from './filterDocumentsModalStyle';
 import NameDocumentsFilter from './nameDocumentsFilter/nameDocumentsFilter';
 import TypeDocumentsFilter from './typeDocumentsFilter/typeDocumentsFilter';
 
