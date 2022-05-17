@@ -16,8 +16,6 @@ const Snackbar = () => {
     };
   }, [showSnackbar]);
 
-  console.log('showSnackbar', showSnackbar);
-
   return (
     <SnackbarWrapper type={snackbarType}>
       <SnackbarText>{snackbarText}</SnackbarText>
