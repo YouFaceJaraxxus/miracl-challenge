@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import CustomModal from '../../common/modal/customModal';
 import IFilterDocumentsModalProps from './filterDocumentsModalProps';
-import { FilterDocumentsModalSelect, FilterDocumentsModalWrapper } from './filterDocumentsModalStyles';
+import { ClearButton, FilterDocumentsModalSelect, FilterDocumentsModalWrapper } from './filterDocumentsModalStyles';
 import NameDocumentsFilter from './nameDocumentsFilter/nameDocumentsFilter';
 import TypeDocumentsFilter from './typeDocumentsFilter/typeDocumentsFilter';
 
@@ -12,6 +12,7 @@ const FilterDocumentsModal = ({
   handleValueChange,
   type,
   value,
+  clearFilter,
 }: IFilterDocumentsModalProps) => {
   const renderFilterDocumentsModalForm = () => {
     switch (type) {
@@ -47,6 +48,7 @@ const FilterDocumentsModal = ({
           </FormControl>
         </FilterDocumentsModalSelect>
         {renderFilterDocumentsModalForm()}
+        <ClearButton onClick={clearFilter}>Clear</ClearButton>
       </FilterDocumentsModalWrapper>
     </CustomModal>
   )

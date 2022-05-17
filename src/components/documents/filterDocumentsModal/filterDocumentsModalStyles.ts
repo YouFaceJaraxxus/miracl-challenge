@@ -29,3 +29,28 @@ export const FilterDocumentsModalTitle = styled('div')(({ theme }) => ({
   color: theme.palette.common.black,
   marginBottom: '20px',
 }));
+
+export const ClearButton = styled('button')(({ theme }) => ({
+  width: '100%',
+  fontSize: '1.2em',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '10px',
+  borderRadius: '15px',
+  textAlign: 'center',
+  wordBreak: 'break-word',
+  '&:hover': {
+    opacity: 0.8,
+    cursor: 'pointer',
+  },
+  border: 'none',
+  outline: 'none',
+  '&:focus': {
+    outline: 'none',
+    border: 'none',
+  },
+  marginTop: '20px',
+  backgroundColor: theme.palette.primary.dark,
+  color: theme.palette.common.white,
+}));

@@ -6,12 +6,12 @@ const NameDocumentsFilter = ({
   handleValueChange
 }: INameDocumentsFilterProps) => {
   const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleValueChange('name', e.target.value);
+    handleValueChange(e.target.value);
   }
   return (
     <TextField
       fullWidth
-      value={value?? ''}
+      value={value ?? ''}
       onChange={handleTextFieldChange}
       type="text"
       label={'File name'}

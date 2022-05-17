@@ -32,7 +32,7 @@ const TypeDocumentsFilter = ({
 }: ITypeDocumentsFilterProps) => {
   const handleTypeSelectValueChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
-    handleValueChange('type', value);
+    handleValueChange(value);
   }
   return (
     <FormControl fullWidth

@@ -15,7 +15,6 @@ import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
 import { ICreateDocument } from '../../service/interfaces/documentService';
 import { DOCUMENTS_PAGE_SIZE } from '../../util/constants';
 import FilterDocumentsModal from './filterDocumentsModal/filterDocumentsModal';
-import IFilterDocumentsModalProps from './filterDocumentsModal/filterDocumentsModalProps';
 
 const documentsTableHeaders = [
   'Name',
@@ -30,7 +29,7 @@ const Documents = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getDocuments = (offset?: number, type = filterDocumentsModalConfig.type, value = filterDocumentsModalConfig.value) => {
+  const getDocuments = (offset?: number, type = filterDocumentsModalType, value = filterDocumentsModalValue) => {
     dispatch(getDocumentsAsync({
       limit: DOCUMENTS_PAGE_SIZE,
       offset,
@@ -81,49 +80,23 @@ const Documents = () => {
 
 
   const [filterDocumentsModalOpen, setFilterDocumentsModalOpen] = useState(false);
-
-  const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
-    value: null,
-    handleClose: () => {
-      setFilterDocumentsModalOpen(false);
-    },
-    handleTypeChange: (type: 'name' | 'type') => {
-      setFilterDocumentsType(type);
-    },
-    handleValueChange: (type: 'name' | 'type', value: string) => {
-      setFilterDocumentsValue(type, value);
-    },
-  } as IFilterDocumentsModalProps);
-
+  const [filterDocumentsModalValue, setFilterDocumentsModalValue] = useState(null);
+  const [filterDocumentsModalType, setFilterDocumentsModalType] = useState(null);
 
 
   useEffect(() => {
-    getDocuments(0, filterDocumentsModalConfig.type, filterDocumentsModalConfig.value);
+    getDocuments(0, filterDocumentsModalType, filterDocumentsModalValue);
     setCurrentPage(1);
     console.log('type or value change')
-  }, [filterDocumentsModalConfig.value, filterDocumentsModalConfig.type])
+  }, [filterDocumentsModalValue, filterDocumentsModalType])
 
-  const setFilterDocumentsType = (type: 'name' | 'type') => {
-    setFilterDocumentsModalConfig({
-      ...filterDocumentsModalConfig,
-      type,
-      value: '',
-    })
-  }
-
-  const setFilterDocumentsValue = (type: 'name' | 'type', value: string) => {
-    setFilterDocumentsModalConfig({
-      ...filterDocumentsModalConfig,
-      type,
-      value
-    })
-  }
 
   const patchDocument = (document: IDocument) => {
     dispatch(patchDocumentAsync(document));
   }
 
   const openPatchDocumentModal = (document: IDocument) => {
+    console.log('patch', document);
     setSaveDocumentModalConfig({
       ...saveDocumentModalConfig,
       type: 'update',
@@ -207,7 +180,20 @@ const Documents = () => {
         <ConfirmModal {...deleteDocumentModalConfig} />
         <FilterDocumentsModal
           isOpen={filterDocumentsModalOpen}
-          {...filterDocumentsModalConfig}
+          handleClose={() => {
+            setFilterDocumentsModalOpen(false);
+          }}
+          handleTypeChange={(type: string) => {
+            setFilterDocumentsModalType(type);
+          }}
+          handleValueChange={(value: string) => {
+            setFilterDocumentsModalValue(value);
+          }}
+          type={filterDocumentsModalType}
+          value={filterDocumentsModalValue}
+          clearFilter={() => {
+            setFilterDocumentsModalValue('');
+          }}
         />
         <CustomTable
           headers={documentsTableHeaders}
