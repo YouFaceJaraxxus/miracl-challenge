@@ -192,7 +192,7 @@ const Documents = () => {
             setFilterDocumentsModalType(type);
             if(type === 'type'){
               setFilterDocumentsModalValue('pdf');
-            }
+            } else setFilterDocumentsModalValue('');
           }}
           handleValueChange={(value: string) => {
             setFilterDocumentsModalValue(value);
