@@ -17,20 +17,20 @@ class HttpService implements IAxiosService {
     return axios.get(`${this.baseUrl}${path}${queryString ? `?${queryString}` : ''}`, config?.axiosConfig);
   }
 
-  post = (path: string, data: object, config?: object) => {
-    return axios.post(`${this.baseUrl}${path}`, JSON.stringify(data), config);
+  post = (path: string, data: object, config?: IServiceConfig) => {
+    return axios.post(`${this.baseUrl}${path}`, JSON.stringify(data), config?.axiosConfig);
   }
 
-  put = (path: string, data: any, config?: object) => {
-    return axios.put(`${this.baseUrl}${path}`, JSON.stringify(data), config);
+  put = (path: string, data: any, config?: IServiceConfig) => {
+    return axios.put(`${this.baseUrl}${path}`, JSON.stringify(data), config?.axiosConfig);
   }
 
-  patch = (path: string, data: any, config?: object) => {
-    return axios.patch(`${this.baseUrl}${path}`, JSON.stringify(data), config);
+  patch = (path: string, data: any, config?: IServiceConfig) => {
+    return axios.patch(`${this.baseUrl}${path}`, JSON.stringify(data), config?.axiosConfig);
   }
 
-  delete = (path: string, config?: object) => {
-    return axios.delete(`${this.baseUrl}${path}`, config);
+  delete = (path: string, config?: IServiceConfig) => {
+    return axios.delete(`${this.baseUrl}${path}`, config?.axiosConfig);
   }
 }
 
