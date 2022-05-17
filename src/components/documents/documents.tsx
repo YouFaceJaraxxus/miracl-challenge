@@ -50,7 +50,12 @@ const Documents = () => {
 
 
   const deleteDocument = (id: string) => {
-    dispatch(deleteDocumentAsync(id));
+    dispatch(deleteDocumentAsync(id)).then(() => {
+      //an edge case: what if we delete the last item in the list on the current page
+      if (documents.length === 1) {
+        handlePagination(1);
+      }
+    });
   }
 
   const closeDeleteDocumentModal = () => {
@@ -87,7 +92,6 @@ const Documents = () => {
   useEffect(() => {
     getDocuments(0, filterDocumentsModalType, filterDocumentsModalValue);
     setCurrentPage(1);
-    console.log('type or value change')
   }, [filterDocumentsModalValue, filterDocumentsModalType])
 
 
@@ -96,9 +100,9 @@ const Documents = () => {
   }
 
   const openPatchDocumentModal = (document: IDocument) => {
-    console.log('patch', document);
     setSaveDocumentModalConfig({
       ...saveDocumentModalConfig,
+      isOpen: true,
       type: 'update',
       handleFormSubmit: (document: IDocument | ICreateDocument) => {
         patchDocument(document as IDocument);
@@ -110,6 +114,7 @@ const Documents = () => {
   const openDeleteDocumentModal = (id: string) => {
     setDeleteDocumentModalConfig({
       ...deleteDocumentModalConfig,
+      isOpen: true,
       handleAccept: () => {
         deleteDocument(id);
         closeDeleteDocumentModal();
