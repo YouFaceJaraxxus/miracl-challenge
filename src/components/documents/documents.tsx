@@ -101,7 +101,6 @@ const Documents = () => {
   
 
   useEffect(()=> {
-    console.log('changed type or value');
     getDocuments(0, filterDocumentsModalConfig.type, filterDocumentsModalConfig.value);
     setCurrentPage(1);
   }, [filterDocumentsModalConfig.value, filterDocumentsModalConfig.type])
@@ -209,8 +208,6 @@ const Documents = () => {
     }
     else return { hasPagination: false };
   }
-
-  console.log('final docs', documents);
 
   return (
     <Content title="Documents">
