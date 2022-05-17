@@ -11,6 +11,11 @@ const getArrayFromObject = (productObject: object) => productObject ? Object.ent
     }
   }) : [];
 
+const getEnumKeyArray = (e: any) => {
+  return (Object.keys(e) as Array<keyof typeof e>).map((key) => key.toString().toLowerCase());
+}
+
 export {
-  getArrayFromObject
+  getArrayFromObject,
+  getEnumKeyArray
 };

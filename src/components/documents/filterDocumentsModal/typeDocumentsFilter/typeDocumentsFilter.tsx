@@ -1,30 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DocumentType } from "../../../../models/document/IDocument";
+import { getEnumKeyArray } from "../../../../util/util";
 import ITypeDocumentsFilterProps from "./typeDocumentsFilterProps";
-
-interface IFileType {
-  type: string;
-  label: string;
-};
-
-const documentTypes = [
-  {
-    type: DocumentType.PDF,
-    label: DocumentType.PDF
-  },
-  {
-    type: DocumentType.TXT,
-    label: DocumentType.TXT
-  },
-  {
-    type: DocumentType.JPG,
-    label: DocumentType.JPG
-  },
-  {
-    type: DocumentType.OTHER,
-    label: DocumentType.OTHER
-  },
-] as IFileType[]
 
 const TypeDocumentsFilter = ({
   value,
@@ -49,8 +26,8 @@ const TypeDocumentsFilter = ({
         onChange={handleTypeSelectValueChange}
       >
         {
-          documentTypes.map((dType, index) => (
-            <MenuItem key={index} value={dType.type}>{dType.label}</MenuItem>
+          getEnumKeyArray(DocumentType).map((key, index) => (
+            <MenuItem key={index} value={key}>{key}</MenuItem>
           ))
         }
       </Select>

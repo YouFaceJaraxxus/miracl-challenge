@@ -3,7 +3,6 @@ export enum DocumentType{
   TXT = 'txt',
   JPG = 'jpg',
   OTHER = 'other',
-  NONE = '',
 }
 
 export default interface IDocument {

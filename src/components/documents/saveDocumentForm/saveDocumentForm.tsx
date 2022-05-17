@@ -7,6 +7,8 @@ import { CustomForm, FormTextField, SubmitButton } from '../../common/customForm
 import ISaveDocumentFormProps from './saveDocumentFormProps';
 import { ICreateDocument } from '../../../service/interfaces/documentService';
 import { DocumentType } from '../../../models/document/IDocument';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { getEnumKeyArray } from '../../../util/util';
 
 const SaveDocumentForm = ({
   isOpen,
@@ -45,7 +47,7 @@ const SaveDocumentForm = ({
         handleFormSubmit({ ...getValues(), ...(type === 'update' && { id: initialValues?.id }) });
         handleClose();
         setValue('name', '');
-        setValue('type', DocumentType.NONE);
+        setValue('type', DocumentType.OTHER);
       },
       handleClose: closeConfirmModal,
       severity: 'success',
@@ -95,23 +97,33 @@ const SaveDocumentForm = ({
           <Controller
             name="type"
             control={control}
-            defaultValue={DocumentType.NONE}
+            defaultValue={DocumentType.OTHER}
             render={({
               field: { onChange, value },
               fieldState: { error },
             }) => (
-              <FormTextField
-                fullWidth
-                value={value}
-                error={!!error}
-                helperText={error ? error.message : null}
-                onChange={onChange}
-                type="text"
-                label={'Type'}
-                sx={{
-                  marginBottom: '15px'
-                }}
-              />
+              <FormControl fullWidth>
+                <InputLabel id="type-update-select-label">Type</InputLabel>
+                <Select
+                  labelId="type-update-select-label"
+                  id="type-update-select"
+                  value={value ?? ""}
+                  label="Filter by"
+                  defaultValue={"pdf"}
+                  fullWidth
+                  error={!!error}
+                  onChange={onChange}
+                  sx={{
+                    marginBottom: '15px'
+                  }}
+                >
+                  {
+                    getEnumKeyArray(DocumentType).map((key, index) => (
+                      <MenuItem key={index} value={key.toLowerCase()}>{key.toLowerCase()}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
             )}
             rules={{
               required: 'Type required',
