@@ -6,9 +6,9 @@ import CustomModal from '../../common/modal/customModal';
 import { CustomForm, FormTextField, SubmitButton } from '../../common/customForm/customFormStyle';
 import ISaveDocumentFormProps from './saveDocumentFormProps';
 import { ICreateDocument } from '../../../service/interfaces/documentService';
-import { DocumentType } from '../../../models/document/IDocument';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { getEnumKeyArray } from '../../../util/util';
+import { useAppSelector } from '../../../redux/store/hooks';
+import { selectDocumentTypes } from '../../../redux/store/store';
 
 const SaveDocumentForm = ({
   isOpen,
@@ -20,6 +20,8 @@ const SaveDocumentForm = ({
   const { handleSubmit, control, getValues, setValue } = useForm<ICreateDocument>({
     defaultValues: initialValues,
   });
+
+  const {documentTypes} = useAppSelector(selectDocumentTypes);
 
   useEffect(() => {
     if (initialValues) {
@@ -47,7 +49,7 @@ const SaveDocumentForm = ({
         handleFormSubmit({ ...getValues(), ...(type === 'update' && { id: initialValues?.id }) });
         handleClose();
         setValue('name', '');
-        setValue('type', DocumentType.OTHER);
+        setValue('type', '');
       },
       handleClose: closeConfirmModal,
       severity: 'success',
@@ -97,7 +99,7 @@ const SaveDocumentForm = ({
           <Controller
             name="type"
             control={control}
-            defaultValue={DocumentType.OTHER}
+            defaultValue={""}
             render={({
               field: { onChange, value },
               fieldState: { error },
@@ -118,8 +120,8 @@ const SaveDocumentForm = ({
                   }}
                 >
                   {
-                    getEnumKeyArray(DocumentType).map((key, index) => (
-                      <MenuItem key={index} value={key.toLowerCase()}>{key.toLowerCase()}</MenuItem>
+                    documentTypes?.map((dType, index) => (
+                      <MenuItem key={index} value={dType.key}>{dType.value}</MenuItem>
                     ))
                   }
                 </Select>

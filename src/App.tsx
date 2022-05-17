@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Layout from './components/layout/Layout';
+import { getDocumentTypesAsync } from './redux/slices/documentTypesSlice';
 import { setCheckedIsLogged, setIsLogged } from './redux/slices/userSlice';
 import { useAppDispatch } from './redux/store/hooks';
 import Router from './router/router';
@@ -22,6 +23,7 @@ const App = () => {
       dispatch(setCheckedIsLogged(true));
       dispatch(setIsLogged(false));
     }
+    dispatch(getDocumentTypesAsync())
   }, [dispatch]);
 
   return (

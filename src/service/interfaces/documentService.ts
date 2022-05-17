@@ -1,4 +1,4 @@
-import IDocument, { DocumentType } from "../../models/document/IDocument";
+import IDocument from "../../models/document/IDocument";
 import { IServiceConfig } from "./service";
 
 
@@ -33,13 +33,13 @@ interface IGetAllDocumentsResponse{
 
 interface ICreateDocument {
   name: string;
-  type: DocumentType;
+  type: string;
   contactId: string;
 }
 
 interface IPatchDocument {
   id: string;
-  type?: DocumentType;
+  type?: string;
   contactId?: string;
 }
 

@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { DocumentType } from "../../../../models/document/IDocument";
-import { getEnumKeyArray } from "../../../../util/util";
+import { useAppSelector } from "../../../../redux/store/hooks";
+import { selectDocumentTypes } from "../../../../redux/store/store";
 import ITypeDocumentsFilterProps from "./typeDocumentsFilterProps";
 
 const TypeDocumentsFilter = ({
@@ -11,6 +11,9 @@ const TypeDocumentsFilter = ({
     const value = e.target.value;
     handleValueChange(value);
   }
+
+  const { documentTypes } = useAppSelector(selectDocumentTypes);
+
   return (
     <FormControl fullWidth
       sx={{
@@ -26,8 +29,8 @@ const TypeDocumentsFilter = ({
         onChange={handleTypeSelectValueChange}
       >
         {
-          getEnumKeyArray(DocumentType).map((key, index) => (
-            <MenuItem key={index} value={key}>{key}</MenuItem>
+          documentTypes?.map((dType, index) => (
+            <MenuItem key={index} value={dType.key}>{dType.value}</MenuItem>
           ))
         }
       </Select>

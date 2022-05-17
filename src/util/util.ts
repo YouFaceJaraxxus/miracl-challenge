@@ -13,10 +13,6 @@ const getArrayFromObject = (productObject: object) => productObject ? Object.ent
     }
   }) : [];
 
-const getEnumKeyArray = (e: any) => {
-  return (Object.keys(e) as Array<keyof typeof e>).map((key) => key.toString().toLowerCase());
-}
-
 const generateRandomDelay= () => {
   const rand = Math.random();
   return Math.floor(rand * (MAX_DOWNLOAD_TIME - MIN_DOWNLOAD_TIME) + MIN_DOWNLOAD_TIME);
@@ -30,7 +26,6 @@ const generateDownloadPromise = (delay: number): Promise<boolean> => {
 
 export {
   getArrayFromObject,
-  getEnumKeyArray,
   generateDownloadPromise,
   generateRandomDelay,
 };
