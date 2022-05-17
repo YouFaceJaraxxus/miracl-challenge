@@ -70,8 +70,8 @@ const Documents = () => {
   const [deleteDocumentModalConfig, setDeleteDocumentModalConfig] = useState({
     isOpen: false,
     handleClose: () => {
-      setFilterDocumentsModalConfig({
-        ...filterDocumentsModalConfig,
+      setDeleteDocumentModalConfig({
+        ...deleteDocumentModalConfig,
         isOpen: false,
       })
     },
@@ -80,15 +80,12 @@ const Documents = () => {
   } as IConfirmModalProps);
 
 
+  const [filterDocumentsModalOpen, setFilterDocumentsModalOpen] = useState(false);
 
   const [filterDocumentsModalConfig, setFilterDocumentsModalConfig] = useState({
-    isOpen: false,
     value: null,
     handleClose: () => {
-      setFilterDocumentsModalConfig({
-        ...filterDocumentsModalConfig,
-        isOpen: false,
-      })
+      setFilterDocumentsModalOpen(false);
     },
     handleTypeChange: (type: 'name' | 'type') => {
       setFilterDocumentsType(type);
@@ -98,17 +95,17 @@ const Documents = () => {
     },
   } as IFilterDocumentsModalProps);
 
-  
 
-  useEffect(()=> {
+
+  useEffect(() => {
     getDocuments(0, filterDocumentsModalConfig.type, filterDocumentsModalConfig.value);
     setCurrentPage(1);
+    console.log('type or value change')
   }, [filterDocumentsModalConfig.value, filterDocumentsModalConfig.type])
 
   const setFilterDocumentsType = (type: 'name' | 'type') => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
-      isOpen: true,
       type,
       value: '',
     })
@@ -117,7 +114,6 @@ const Documents = () => {
   const setFilterDocumentsValue = (type: 'name' | 'type', value: string) => {
     setFilterDocumentsModalConfig({
       ...filterDocumentsModalConfig,
-      isOpen: true,
       type,
       value
     })
@@ -130,7 +126,6 @@ const Documents = () => {
   const openPatchDocumentModal = (document: IDocument) => {
     setSaveDocumentModalConfig({
       ...saveDocumentModalConfig,
-      isOpen: true,
       type: 'update',
       handleFormSubmit: (document: IDocument | ICreateDocument) => {
         patchDocument(document as IDocument);
@@ -142,18 +137,10 @@ const Documents = () => {
   const openDeleteDocumentModal = (id: string) => {
     setDeleteDocumentModalConfig({
       ...deleteDocumentModalConfig,
-      isOpen: true,
       handleAccept: () => {
         deleteDocument(id);
         closeDeleteDocumentModal();
       }
-    })
-  }
-
-  const openFilterDocumentsModal = () => {
-    setFilterDocumentsModalConfig({
-      ...filterDocumentsModalConfig,
-      isOpen: true,
     })
   }
 
@@ -218,14 +205,19 @@ const Documents = () => {
       }}>
         <SaveDocumentForm {...saveDocumentModalConfig} />
         <ConfirmModal {...deleteDocumentModalConfig} />
-        <FilterDocumentsModal {...filterDocumentsModalConfig} />
+        <FilterDocumentsModal
+          isOpen={filterDocumentsModalOpen}
+          {...filterDocumentsModalConfig}
+        />
         <CustomTable
           headers={documentsTableHeaders}
           rows={getDocumentTableRows()}
           hasIndexes
           pagination={getPagination()}
           hasFilter
-          handleOpenFilter={openFilterDocumentsModal}
+          handleOpenFilter={() => {
+            setFilterDocumentsModalOpen(true);
+          }}
         />
       </DocumentsWrapper>
     </Content>
