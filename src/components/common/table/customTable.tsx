@@ -7,12 +7,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ICustomTableProps, ITableRowItem } from './customTableProps';
-import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper } from './customTableStyle';
+import { TableHeaderCell, TableItemButton, TableItemText, PaginationWrapper, NoContent } from './customTableStyle';
 import { Pagination } from '@mui/material';
 import { Icon, IconWrapperLink } from '../icon/icon';
 
 
 const CustomTable = ({
+  itemType,
   headers,
   rows,
   hasIndexes = false,
@@ -77,54 +78,63 @@ const CustomTable = ({
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
 
-            <TableRow>
-              {hasIndexes &&
-                <TableHeaderCell align="center">No.</TableHeaderCell>
-              }
-              {
-                headers.map((header, index) => (
-                  <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
-                ))
-              }
-              {
-                hasFilter && (
-                  <TableHeaderCell align="center">
-                    <IconWrapperLink onClick={handleOpenFilter}>
-                      <Icon src="./filter_icon.svg" alt="filter icon" />
-                    </IconWrapperLink>
-                  </TableHeaderCell>
-                )
-              }
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index) => (
-              <TableRow
-                key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                {hasIndexes &&
-                  <TableCell align="center">{getRowNumber(index)}</TableCell>
-                }
-                {
-                  row.rowItems.map((rowItem, index) => (
-                    <TableCell align="center" key={index}>{renderRowItem(rowItem)}</TableCell>
-                  ))
-                }
-                {
-                  hasFilter && (
-                    <TableHeaderCell align="center"></TableHeaderCell>
-                  )
-                }
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {rows && rows.length > 0 ?
+        (
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  {hasIndexes &&
+                    <TableHeaderCell align="center">No.</TableHeaderCell>
+                  }
+                  {
+                    headers.map((header, index) => (
+                      <TableHeaderCell align="center" key={index}>{header}</TableHeaderCell>
+                    ))
+                  }
+                  {
+                    hasFilter && (
+                      <TableHeaderCell align="center">
+                        <IconWrapperLink onClick={handleOpenFilter}>
+                          <Icon src="./filter_icon.svg" alt="filter icon" />
+                        </IconWrapperLink>
+                      </TableHeaderCell>
+                    )
+                  }
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row, index) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    {hasIndexes &&
+                      <TableCell align="center">{getRowNumber(index)}</TableCell>
+                    }
+                    {
+                      row.rowItems.map((rowItem, index) => (
+                        <TableCell align="center" key={index}>{renderRowItem(rowItem)}</TableCell>
+                      ))
+                    }
+                    {
+                      hasFilter && (
+                        <TableHeaderCell align="center"></TableHeaderCell>
+                      )
+                    }
+                  </TableRow>
+                ))}
+              </TableBody></Table>
+          </TableContainer>
+        )
+        :
+        (
+          <NoContent>No {itemType} available</NoContent>
+        )
+      }
+
+
       {
         hasPagination &&
         <PaginationWrapper>

@@ -21,6 +21,7 @@ interface ICustomTablePagination{
 }
 
 interface ICustomTableProps{
+  itemType: string;
   headers: string[];
   rows: ITableRow[];
   hasIndexes?: boolean;

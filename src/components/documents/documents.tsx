@@ -13,10 +13,11 @@ import SaveDocumentForm from './saveDocumentForm/saveDocumentForm';
 import { DocumentsWrapper, NoUserSelected, SelectUserWrapper } from './documentsStyle';
 import ISaveDocumentFormProps from './saveDocumentForm/saveDocumentFormProps';
 import { ICreateDocument } from '../../service/interfaces/documentService';
-import { DOCUMENTS_PAGE_SIZE } from '../../util/constants';
+import { DOCUMENTS_PAGE_SIZE, ERROR, SUCCESS } from '../../util/constants';
 import FilterDocumentsModal from './filterDocumentsModal/filterDocumentsModal';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { getUsersAsync } from '../../redux/slices/usersSlice';
+import { openSnackbar } from '../../redux/slices/commonSlice';
 
 const documentsTableHeaders = [
   'Name',
@@ -69,6 +70,11 @@ const Documents = () => {
       if (documents.length === 1) {
         handlePagination(1);
       }
+      dispatch(openSnackbar({
+        showSnackbar: true,
+        snackbarText: 'Document deleted',
+        snackbarType: SUCCESS,
+      }))
     });
   }
 
@@ -117,7 +123,13 @@ const Documents = () => {
 
 
   const patchDocument = (document: IDocument) => {
-    dispatch(patchDocumentAsync(document));
+    dispatch(patchDocumentAsync(document)).then(() => {
+      dispatch(openSnackbar({
+        showSnackbar: true,
+        snackbarText: 'Document updated',
+        snackbarType: SUCCESS,
+      }))
+    });
   }
 
   const openPatchDocumentModal = (document: IDocument) => {
@@ -247,6 +259,7 @@ const Documents = () => {
         {
           currentUser ? (
             <CustomTable
+              itemType='Documents'
               headers={documentsTableHeaders}
               rows={getDocumentTableRows()}
               hasIndexes

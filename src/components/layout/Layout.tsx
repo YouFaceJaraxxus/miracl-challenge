@@ -5,7 +5,8 @@ import Header from '../header/header';
 import { LayoutWrapper } from './layoutStyle';
 
 const Layout = ({ children }: any) => {
-  const { showSnackbar } = useAppSelector(selectCommon);
+  const { snackbarConfig } = useAppSelector(selectCommon);
+  const { showSnackbar } = snackbarConfig;
   console.log('showSnackbar', showSnackbar);
   return (
     <LayoutWrapper>

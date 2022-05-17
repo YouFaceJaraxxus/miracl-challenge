@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ERROR, SUCCESS } from '../../../util/constants';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../redux/store/hooks';
 import { selectCommon } from '../../../redux/store/store';
 import { closeSnackbar } from '../../../redux/slices/commonSlice';
@@ -9,8 +8,8 @@ import { SnackbarCloseIcon, SnackbarText, SnackbarWrapper } from './snackbarStyl
 const SNACKBAR_HIDE_TIMEOUT = 4000;
 const Snackbar = () => {
   const dispatch = useDispatch();
-  const { snackbarText, snackbarType, showSnackbar } = useAppSelector(selectCommon);
-
+  const { snackbarConfig } = useAppSelector(selectCommon);
+  const { snackbarText, snackbarType, showSnackbar } = snackbarConfig;
   useEffect(() => {
     if (showSnackbar) {
       setTimeout(() => { dispatch(closeSnackbar()) }, SNACKBAR_HIDE_TIMEOUT);

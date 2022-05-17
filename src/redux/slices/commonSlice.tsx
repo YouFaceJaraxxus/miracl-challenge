@@ -1,18 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SUCCESS } from '../../util/constants';
 
-interface ICommon {
-  theme: string;
+interface ISnackbarConfig {
   showSnackbar: boolean;
   snackbarText: string;
   snackbarType: 'success' | 'error';
 }
 
+interface ICommon {
+  theme: string;
+  snackbarConfig: ISnackbarConfig;
+}
+
+
+
 const initialState: ICommon = {
   theme: 'light',
-  showSnackbar: false,
-  snackbarText: '',
-  snackbarType: SUCCESS,
+  snackbarConfig: {
+    showSnackbar: false,
+    snackbarText: '',
+    snackbarType: SUCCESS,
+  }
 };
 
 const commonSlice = createSlice({
@@ -22,15 +30,15 @@ const commonSlice = createSlice({
     setTheme: (state, action: PayloadAction<string>) => {
       state.theme = action.payload;
     },
-    openSnackbar: (state, action) => {
-      state.showSnackbar = true;
-      state.snackbarText = action.payload.text;
-      state.snackbarType = action.payload.type;
+    openSnackbar: (state, action: PayloadAction<ISnackbarConfig>) => {
+      state.snackbarConfig = action.payload;
     },
     closeSnackbar: (state) => {
-      state.showSnackbar = false;
-      state.snackbarText = '';
-      state.snackbarType = SUCCESS;
+      state.snackbarConfig = {
+        showSnackbar: false,
+        snackbarText: '',
+        snackbarType: SUCCESS,
+      }
     },
   },
 })

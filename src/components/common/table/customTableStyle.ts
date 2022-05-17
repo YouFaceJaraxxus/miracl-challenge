@@ -37,3 +37,14 @@ export const PaginationWrapper = styled('div')(() => ({
   margin: 'auto',
   marginTop: '10px',
 }));
+
+export const NoContent = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  margin: 'auto',
+  marginTop: '100px',
+  fontWeight: 'bolder',
+  fontSize: '3em',
+}));

@@ -1,10 +1,12 @@
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import IUser from '../../models/user/IUser';
+import { openSnackbar } from '../../redux/slices/commonSlice';
 import { createUserAsync, deleteUserAsync, getUsersAsync, patchUserAsync } from '../../redux/slices/usersSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store/hooks';
 import { selectUsers } from '../../redux/store/store';
 import { ICreateUser } from '../../service/interfaces/userService';
+import { SUCCESS } from '../../util/constants';
 import Content from '../common/content/content';
 import ConfirmModal from '../common/modal/confirmModal/confirmModal';
 import IConfirmModalProps from '../common/modal/confirmModal/confirmModalProps';
@@ -37,7 +39,13 @@ const Users = () => {
   }
 
   const deleteUser = (id: string) => {
-    dispatch(deleteUserAsync(id));
+    dispatch(deleteUserAsync(id)).then(() => {
+      dispatch(openSnackbar({
+        showSnackbar: true,
+        snackbarText: 'User deleted',
+        snackbarType: SUCCESS,
+      }))
+    });
   }
 
   const closeDeleteUserModal = () => {
@@ -56,11 +64,23 @@ const Users = () => {
   } as IConfirmModalProps);
 
   const createUser = (user: ICreateUser) => {
-    dispatch(createUserAsync(user));
+    dispatch(createUserAsync(user)).then(() => {
+      dispatch(openSnackbar({
+        showSnackbar: true,
+        snackbarText: 'User created',
+        snackbarType: SUCCESS,
+      }))
+    });
   }
 
   const patchUser = (user: IUser) => {
-    dispatch(patchUserAsync(user));
+    dispatch(patchUserAsync(user)).then(() => {
+      dispatch(openSnackbar({
+        showSnackbar: true,
+        snackbarText: 'User updated',
+        snackbarType: SUCCESS,
+      }))
+    });
   }
 
   const openCreateUserModal = () => {
@@ -113,7 +133,7 @@ const Users = () => {
           {
             type: 'button',
             text: 'Update',
-            action : () => openPatchUserModal(user),
+            action: () => openPatchUserModal(user),
             color: theme.palette.common.white,
             bgColor: theme.palette.primary.main,
           },
@@ -134,7 +154,7 @@ const Users = () => {
   return (
     <Content title="Users">
       <UsersWrapper sx={{
-        width:{
+        width: {
           xs: '100%'
         }
       }}>
@@ -142,6 +162,7 @@ const Users = () => {
         <ConfirmModal {...deleteUserModalConfig} />
         <AddUserButton onClick={openCreateUserModal}>Add user</AddUserButton>
         <CustomTable
+          itemType='Users'
           headers={userTableHeaders}
           rows={getUserTableRows()}
           hasIndexes
