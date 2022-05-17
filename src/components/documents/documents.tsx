@@ -17,11 +17,13 @@ import { DOCUMENTS_PAGE_SIZE, ERROR, SUCCESS } from '../../util/constants';
 import FilterDocumentsModal from './filterDocumentsModal/filterDocumentsModal';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { getUsersAsync } from '../../redux/slices/usersSlice';
-import { openSnackbar } from '../../redux/slices/commonSlice';
+import { openProgress, openSnackbar } from '../../redux/slices/commonSlice';
+import { generateDownloadPromise, generateRandomDelay } from '../../util/util';
 
 const documentsTableHeaders = [
   'Name',
   'Type',
+  '',
   '',
   '',
 ] as string[];
@@ -155,6 +157,22 @@ const Documents = () => {
     })
   }
 
+  const downloadDocument = (document: IDocument) => {
+    const randomDelay = generateRandomDelay();
+    dispatch(openProgress({
+      showProgress: true,
+      progressSize: randomDelay,
+      progressText: `Downloading file "${document.name}"`,
+    }))
+    generateDownloadPromise(randomDelay).then((success) => {
+      dispatch(openSnackbar({
+        showSnackbar: true,
+        snackbarText: success ? 'Document downloaded': 'Failed to download document',
+        snackbarType: success ? SUCCESS : ERROR,
+      }))
+    })
+  }
+
   const getDocumentTableRows = (): ITableRow[] => {
     return documents ? documents.map((document) => {
       return {
@@ -181,6 +199,13 @@ const Documents = () => {
             action: () => openDeleteDocumentModal(document.id),
             color: theme.palette.common.white,
             bgColor: theme.palette.error.main,
+          },
+          {
+            type: 'button',
+            text: 'Download',
+            action: () => downloadDocument(document),
+            color: theme.palette.common.white,
+            bgColor: theme.palette.success.main,
           },
         ]
       } as ITableRow;

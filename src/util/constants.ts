@@ -6,6 +6,8 @@ const DEFAULT_PAGE_SIZE = 10;
 const DOCUMENTS_PAGE_SIZE = DEFAULT_PAGE_SIZE;
 const ERROR = 'error';
 const SUCCESS = 'success';
+const MIN_DOWNLOAD_TIME = 1000;
+const MAX_DOWNLOAD_TIME = 2000;
 
 export {
   JSON_SUFFIX,
@@ -16,4 +18,6 @@ export {
   DOCUMENTS_PAGE_SIZE,
   ERROR,
   SUCCESS,
+  MIN_DOWNLOAD_TIME,
+  MAX_DOWNLOAD_TIME,
 };

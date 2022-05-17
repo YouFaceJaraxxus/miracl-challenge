@@ -7,9 +7,16 @@ interface ISnackbarConfig {
   snackbarType: 'success' | 'error';
 }
 
+interface IProgressCircleConfig{
+  showProgress: boolean;
+  progressText: string;
+  progressSize: number;
+}
+
 interface ICommon {
   theme: string;
   snackbarConfig: ISnackbarConfig;
+  progressCircleConfig: IProgressCircleConfig;
 }
 
 
@@ -20,6 +27,11 @@ const initialState: ICommon = {
     showSnackbar: false,
     snackbarText: '',
     snackbarType: SUCCESS,
+  },
+  progressCircleConfig: {
+    showProgress: false,
+    progressText: '',
+    progressSize: 0,
   }
 };
 
@@ -40,6 +52,16 @@ const commonSlice = createSlice({
         snackbarType: SUCCESS,
       }
     },
+    openProgress: (state, action: PayloadAction<IProgressCircleConfig>) => {
+      state.progressCircleConfig = action.payload;
+    },
+    closeProgress: (state) => {
+      state.progressCircleConfig = {
+        showProgress: false,
+        progressText: '',
+        progressSize: 0,
+      }
+    },
   },
 })
 
@@ -47,6 +69,8 @@ export const {
   setTheme,
   openSnackbar,
   closeSnackbar,
+  openProgress,
+  closeProgress,
 } = commonSlice.actions;
 
 export default commonSlice.reducer; 
